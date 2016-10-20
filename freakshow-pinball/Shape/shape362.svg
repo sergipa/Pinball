@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg version="1.1" id="Layer_1"
+xmlns="http://www.w3.org/2000/svg"
+xmlns:xlink="http://www.w3.org/1999/xlink"
+xmlns:author="http://www.sothink.com"
+width="71px" height="38px"
+xml:space="preserve">
+<g id="772" transform="matrix(1, 0, 0, 1, 0.15, -0.3)">
+<pattern 
+id="PatternID_636" patternUnits="userSpaceOnUse" overflow="visible" width="71" height="38" viewBox="0 0 71 38" patternTransform="matrix(1, 0, 0, 1, -0.15, 0.3)"
+>
+<image 
+width="71" height="38"
+xlink:href="data:image/png;base64,
+iVBORw0KGgoAAAANSUhEUgAAAEcAAAAmCAYAAACWGIbgAAAD4UlEQVR4nO2aQXKjMBBFG0mUSRULe8fSvkFuMM5NcoS5QchNfJNhbuAbhGWqssALyuASomcxyNUwCBBoPJ4q/1VHdFoN1kOttgHuSFLKGBGxqqrk1nNjo6Io9nqM3TqJ/0nev04gy7JtEARbpdRJSnnS9tfXVxpF0TMAwNPTU+J63o+PjzWNr1fM5+fnUY97l8vllTG2raoqYYxttS2E2AMA5Hl+CMPwdcg2+fu+H48lKaWMhRBvSqmfiJhoW0oZB0HwAwDA8zznH2JRFHsaHxERAKAsyxc9Ljjnr5zzb43TXttCiDcAgCAIkjHb5A8AseubuqUEIh6VUlDXdcoYu9pKqZ8AAEqp05ht8p+iZnXFAFfEEoLVC8CfCMy9WRqnwedFXyvL8kWP73Y7DwBA0H+u6/rIGDs1DyoBAJBSnlar1aBt8rdVGIavGqsoiq5YRVF0Xeqw4D0ZRdGzKSYdB4AEAEB4nvfMOf+GiMkDq7aEUuqAiEnzQk61rR3KskyFEO9DtsnfVhSxBoHrUqcI0J1lt9udhmLS3ZDG6cbsfelXVZUgIkopY2rPuTmXKopiTwszbQP0F2wm0cJyKGafHkXggIx1zt8ovOZqSsFGEaP+ZVmmswvLe8WKagirPsTouAmrKfM+sBqQl+f5M+d8XZZl6vv+WtubzSb918mZZMKqixK1lVKnMAyPVhP9D1h1ZcKqi1IXK9t5HlgNyIgVtfUSNS1j065xC/UhRnNetOuasKL22DI27Rq30BhWS2I/sBpQ6zxhQswGK2dLekB6w5jSfNN2XdfparU6zJ7UBVaulvSQbrVbtfo5SBpfnPO5iVs1u+bIpvmmbUS0q3Gg83B83/9O/jwQOya212dLKd+bJI+e561tExlSlmVb2pdGxKSZs9V8C8NwD/B7B2OMJXVdp7oRV9d12o3jMsdB/U2sbM9WFKUlZysx7jJNfUvaYewWqias9HWKErVt+9vOHo5e6rSfvEQUgTzPD7QvTbHSKFE1u9IBoI0YxfCmiLnG6h46gXeLlWknonNRlEwyYTUFMeGqZeECq6Io9rpgO5/PSd/XQAAAusCbIopYlmVbU0xaWF7v3VXLwgVWSxCYIltU7wqrJQhMzNEK1db3VkIIqKoqyfP80Hd+oWcW3/dj6jMXK4oSLdjosm86ePuZz+QqGociBtDeAa/k2JyhushM8RmTq4LNVlMKy9YPCWzOLM21UZ8xuSrYbDWlsBT0PHW5XIAxtuWcr7Hn/NJFps/nfD4nm83mMDVJU8HmCiWTuvFxpLAcRWwKVks6gff2m0Bjy2IuVlMKM5OWtBeWqi//Xwizo+dUvGbfAAAAAElFTkSuQmCC"
+>
+</image>
+</pattern>
+<path style="fill:url(#PatternID_636) " d="M70.85,38.3L-0.15 38.3L-0.15 0.3L70.85 0.3L70.85 38.3" />
+</g>
+</svg>

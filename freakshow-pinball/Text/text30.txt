@@ -1,0 +1,1 @@
+﻿Use the left and right arrow keys to control the left and right flippers onthe table, respectively. The rightarrow key will control both rightflippers simultaneously. To launch the ball into the playfield, press and hold the down arrow keyuntil the plunger is fully coiled andthen release it.

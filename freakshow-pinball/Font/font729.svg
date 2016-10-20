@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg version="1.1" id="Layer_1"
+xmlns="http://www.w3.org/2000/svg"
+xmlns:xlink="http://www.w3.org/1999/xlink"
+xmlns:author="http://www.sothink.com"
+width="164px" height="212px"
+xml:space="preserve">
+<g id="PathID_704" transform="matrix(0.0352941, 0, 0, 0.0352941, 48, 37.8)">
+<path style="fill:#EFF5E2;fill-opacity:1" d="M512 -512l-102.4 0l0 204.8l-204.8 0l0 -204.8l204.8 0l0 -102.4l-307.2 0l0 716.8l409.6 0l0 -102.4l-307.2 0l0 -204.8l307.2 0l0 -307.2M614.4 -204.8l-102.4 0l0 204.8l102.4 0l0 -204.8" />
+</g>
+<g id="PathID_705" transform="matrix(0.0352941, 0, 0, 0.0352941, 96, 37.8)">
+<path style="fill:#EFF5E2;fill-opacity:1" d="M102.4 -102.4l0 102.4l102.4 0l0 -102.4l-102.4 0M204.8 -204.8l0 102.4l307.2 0l0 102.4l-307.2 0l0 102.4l409.6 0l0 -409.6l-102.4 0l0 102.4l-307.2 0M204.8 -307.2l307.2 0l0 -102.4l-307.2 0l0 102.4" />
+</g>
+<g id="PathID_706" transform="matrix(0.0352941, 0, 0, 0.0352941, 0, 84)">
+<path style="fill:#EFF5E2;fill-opacity:1" d="M204.8 -204.8l0 -102.4l-102.4 0l0 307.2l102.4 0l0 -102.4l409.6 0l0 -204.8l-102.4 0l0 102.4l-307.2 0M614.4 0l-409.6 0l0 102.4l409.6 0l0 -102.4M204.8 -307.2l307.2 0l0 -102.4l-307.2 0l0 102.4" />
+</g>
+<g id="PathID_707" transform="matrix(0.0352941, 0, 0, 0.0352941, 48, 84)">
+<path style="fill:#EFF5E2;fill-opacity:1" d="M204.8 0l0 -307.2l-102.4 0l0 307.2l102.4 0M512 -307.2l0 307.2l-307.2 0l0 102.4l307.2 0l0 102.4l102.4 0l0 -614.4l-409.6 0l0 102.4l307.2 0M512 307.2l0 -102.4l-307.2 0l0 102.4l307.2 0" />
+</g>
+<g id="PathID_708" transform="matrix(0.0352941, 0, 0, 0.0352941, 96, 84)">
+<path style="fill:#EFF5E2;fill-opacity:1" d="M204.8 -716.8l-102.4 0l0 819.2l102.4 0l0 -819.2" />
+</g>
+<g id="PathID_709" transform="matrix(0.0352941, 0, 0, 0.0352941, 0, 132)">
+<path style="fill:#EFF5E2;fill-opacity:1" d="M614.4 -307.2l-102.4 0l0 409.6l102.4 0l0 -409.6M204.8 -307.2l307.2 0l0 -102.4l-409.6 0l0 512l102.4 0l0 -409.6" />
+</g>
+<g id="PathID_710" transform="matrix(0.0352941, 0, 0, 0.0352941, 48, 132)">
+<path style="fill:#EFF5E2;fill-opacity:1" d="M307.2 -409.6l0 102.4l102.4 0l0 -102.4l-102.4 0M204.8 -409.6l-102.4 0l0 512l102.4 0l0 -307.2l102.4 0l0 -102.4l-102.4 0l0 -102.4" />
+</g>
+<g id="PathID_711" transform="matrix(0.0352941, 0, 0, 0.0352941, 96, 132)">
+<path style="fill:#EFF5E2;fill-opacity:1" d="M102.4 -409.6l-102.4 0l0 102.4l102.4 0l0 307.2l102.4 0l0 -307.2l204.8 0l0 -102.4l-204.8 0l0 -204.8l-102.4 0l0 204.8M409.6 0l-204.8 0l0 102.4l204.8 0l0 -102.4" />
+</g>
+</svg>

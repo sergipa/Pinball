@@ -1,0 +1,9 @@
+﻿// Action script...
+
+// [Initial MovieClip Action of sprite 82]
+#initclip 6
+Object.registerClass("FocusManager", mx.managers.FocusManager);
+#endinitclip
+
+// [Action in Frame 1]
+stop ();
