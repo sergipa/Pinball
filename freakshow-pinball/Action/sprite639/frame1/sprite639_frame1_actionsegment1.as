@@ -1,3 +1,0 @@
-﻿// Action script...
-
-stop ();
