@@ -40,14 +40,14 @@ bool j1Map::Start()
 	bool ret = true;
 	
 	// Background 1
-	bg1 = new Sprite(App->tex->Load("images/background1.png"), 0, 0, 633, 500, 0, 0);
+	bg1 = new Sprite(App->tex->Load("images/Background.png"), 0, 0, 395, 537, 0, 0);
 	//Ball
-	ball = new Sprite(App->tex->Load("images/ball.png"), 0, 0, 16, 16);
+	ball = new Sprite(App->tex->Load("images/Ball.png"), 0, 0, 16, 16);
 
 	//Bouncing Circles
-	bouncing_circle1 = new Sprite(App->tex->Load("images/ball.png"), 0, 0, 62, 62);
-	bouncing_circle2 = new Sprite(App->tex->Load("images/ball.png"), 0, 0, 62, 62);
-	bouncing_circle3 = new Sprite(App->tex->Load("images/ball.png"), 0, 0, 62, 62);
+	bouncing_circle1 = new Sprite(App->tex->Load("images/Ball.png"), 0, 0, 62, 62);
+	bouncing_circle2 = new Sprite(App->tex->Load("images/Ball.png"), 0, 0, 62, 62);
+	bouncing_circle3 = new Sprite(App->tex->Load("images/Ball.png"), 0, 0, 62, 62);
 
 	return ret;
 }
@@ -139,7 +139,21 @@ void j1Map::CreateColliders()
 	};
 	PhysBody* colliderb1 = App->physics->CreateChain(0, 0, background, 158, 0x0001, 0x0002);
 	colliderb1->body->SetType(b2_staticBody);
-
+		int big_kicker_left_points[24] = {
+		77, 0,
+		9, 8,
+		5, 11,
+		2, 15,
+		2, 20,
+		3, 25,
+		5, 28,
+		76, 38,
+		86, 34,
+		92, 23,
+		91, 12,
+		84, 3
+	};
+	//big_left_kicker_coll = App->physics->CreateRevoluteJointPoly(15, big_kicker_left_points, 24, 225, 1107, 70, 20, 200, 150, 250, -90, 0x0003, 0x0001);
 	int background2[12] = {
 		36, 371,
 		44, 371,

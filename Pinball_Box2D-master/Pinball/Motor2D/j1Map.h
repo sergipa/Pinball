@@ -76,6 +76,8 @@ public:
 	Sprite*		 bouncing_circle2;
 	Sprite*		 bouncing_circle3;
 
+	b2RevoluteJoint*		 big_left_kicker_coll;
+
 };
 
 #endif // __j1MAP_H__

@@ -372,6 +372,74 @@ b2RevoluteJoint* j1Physics::CreateRevoluteJoint(int radius, int width, int heigh
 	
 	return m_joint;
 }
+b2RevoluteJoint* j1Physics::CreateRevoluteJointPoly(int radius, int* points, int size, int posx, int posy, int despacement, int upper_angle, int lower_angle, int max_torque, int speed, uint16 mask, uint16 category)
+{
+	//body and fixture defs - the common parts
+	b2BodyDef bodyDef;
+	b2FixtureDef fixtureDef;
+	fixtureDef.density = 1;
+	fixtureDef.filter.maskBits = mask;
+	fixtureDef.filter.categoryBits = category;
+
+	//two shapes
+	b2PolygonShape polyShape;
+
+	b2Vec2* Points = new b2Vec2[size / 2];
+	for (uint i = 0; i < size / 2; ++i)
+	{
+		Points[i].x = PIXEL_TO_METERS(points[i * 2 + 0]);
+		Points[i].y = PIXEL_TO_METERS(points[i * 2 + 1]);
+	}
+
+	polyShape.Set(Points, size / 2);
+
+	b2CircleShape circleShape;
+	circleShape.m_radius = PIXEL_TO_METERS(radius);
+
+	//make box a little to the left
+	bodyDef.position.Set(PIXEL_TO_METERS(posx), PIXEL_TO_METERS(posy));
+	fixtureDef.shape = &polyShape;
+	bodyDef.type = b2_dynamicBody;
+	b2Body*m_bodyA = world->CreateBody(&bodyDef);
+	m_bodyA->CreateFixture(&fixtureDef);
+
+	//and circle a little to the right
+	bodyDef.position.Set(PIXEL_TO_METERS(posx), PIXEL_TO_METERS(posy));
+	fixtureDef.shape = &circleShape;
+	bodyDef.type = b2_kinematicBody;
+	b2Body* m_bodyB = world->CreateBody(&bodyDef);
+	m_bodyB->CreateFixture(&fixtureDef);
+
+	b2RevoluteJointDef revoluteJointDef;
+	revoluteJointDef.bodyA = m_bodyA;
+	revoluteJointDef.bodyB = m_bodyB;
+	revoluteJointDef.collideConnected = false;
+	revoluteJointDef.type = e_revoluteJoint;
+	revoluteJointDef.localAnchorA.Set(PIXEL_TO_METERS(despacement), 0);
+
+	if (lower_angle != NULL && upper_angle != NULL)
+	{
+		revoluteJointDef.enableLimit = true;
+		revoluteJointDef.lowerAngle = lower_angle * DEGTORAD;
+		revoluteJointDef.upperAngle = upper_angle * DEGTORAD;
+	}
+	else
+		revoluteJointDef.enableLimit = false;
+
+	if (max_torque != 0)
+	{
+		revoluteJointDef.enableMotor = true;
+		revoluteJointDef.maxMotorTorque = max_torque;
+		revoluteJointDef.motorSpeed = speed * DEGTORAD; //90 degrees per second
+	}
+	else
+		revoluteJointDef.enableMotor = false;
+
+
+	b2RevoluteJoint* m_joint = (b2RevoluteJoint*)world->CreateJoint(&revoluteJointDef);
+
+	return m_joint;
+}
 
 void j1Physics::BeginContact(b2Contact * contact)
 {

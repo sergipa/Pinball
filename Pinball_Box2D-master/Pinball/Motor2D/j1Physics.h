@@ -62,6 +62,7 @@ public:
 	PhysBody* CreateChain(int x, int y, int* points, int size, uint16 mask, uint16 category);
 	PhysBody* CreatePrismaticJoint(PhysBody* Rectangle, int lower, int max, int maxMotor, int motorSpeed);
 	b2RevoluteJoint* CreateRevoluteJoint(int radius, int width, int height, int posx, int posy, int despacement, int upper_angle, int lower_angle, int max_torque, int speed, uint16 mask, uint16 category);
+	b2RevoluteJoint* CreateRevoluteJointPoly(int radius, int* points, int size, int posx, int posy, int despacement, int upper_angle, int lower_angle, int max_torque, int speed, uint16 mask, uint16 category);
 
 	// b2ContactListener ---
 	void BeginContact(b2Contact* contact);
