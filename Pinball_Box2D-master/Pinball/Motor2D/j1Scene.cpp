@@ -69,15 +69,19 @@ bool j1Scene::Update(float dt)
 			App->render->camera.x -= 5;
 	}
 
-/*	// Left kicker
-	if ((App->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN))
-		App->map->left_kicker->SetMotorSpeed(300);
-	else if ((App->input->GetKey(SDL_SCANCODE_Q) == KEY_REPEAT))
-		App->map->left_kicker->SetMotorSpeed(300);
-	else
-		App->map->left_kicker->SetMotorSpeed(-200);
-
-	// Right kicker
+	// Left kicker
+	if ((App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN)) {
+		App->map->left_kicker_coll->SetMotorSpeed(400);
+	}
+	else if ((App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)) {
+		App->map->left_kicker_coll->SetMotorSpeed(400);
+	}
+	else if ((App->input->GetKey(SDL_SCANCODE_A) == KEY_UP)) {
+	}
+	else {
+		App->map->left_kicker_coll->SetMotorSpeed(-200);
+	}
+/*	// Right kicker
 	if ((App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN))
 		App->map->right_kicker->SetMotorSpeed(-300);
 	else if ((App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT))

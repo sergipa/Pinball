@@ -86,7 +86,7 @@ public:
 	Sprite*		 bouncerHitRight;
 	Sprite*		 bouncerHitMid;
 
-	b2RevoluteJoint*		 big_left_kicker_coll;
+	b2RevoluteJoint*		 left_kicker_coll;
 
 };
 

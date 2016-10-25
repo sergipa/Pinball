@@ -144,7 +144,6 @@ void j1Map::CreateColliders()
 		91, 12,
 		84, 3
 	};
-	//big_left_kicker_coll = App->physics->CreateRevoluteJointPoly(15, big_kicker_left_points, 24, 225, 1107, 70, 20, 200, 150, 250, -90, 0x0003, 0x0001);
 	int background2[12] = {
 		36, 371,
 		44, 371,
@@ -157,14 +156,14 @@ void j1Map::CreateColliders()
 	colliderb2->body->SetType(b2_staticBody);
 
 	int background3[16] = {
-		221, 452,
-		228, 461,
-		293, 413,
-		293, 376,
-		290, 372,
-		287, 375,
-		286, 408,
-		226, 448
+		221, 452+20,
+		228, 461+20,
+		293, 413+20,
+		293, 376+20,
+		290, 372+20,
+		287, 375+20,
+		286, 408+20,
+		226, 448+20
 	};
 	PhysBody* colliderb3 = App->physics->CreateChain(0, 0, background3, 16, 0x0001, 0x0002);
 	colliderb3->body->SetType(b2_staticBody);
@@ -191,55 +190,64 @@ void j1Map::CreateColliders()
 	colliderb4->body->SetType(b2_staticBody);
 
 	int background5[20] = {
-		140, 96,
-		140, 62,
-		142, 59,
-		145, 58,
-		148, 59,
-		150, 62,
-		150, 96,
-		148, 99,
-		144, 100,
-		142, 99
+		140, 96+3,
+		140, 62+3,
+		142, 59+3,
+		145, 58+3,
+		148, 59+3,
+		150, 62+3,
+		150, 96+3,
+		148, 99+3,
+		144, 100+3,
+		142, 99+3
 	};
 	PhysBody* colliderb5 = App->physics->CreateChain(0, 0, background5, 20, 0x0001, 0x0002);
 	colliderb5->body->SetType(b2_staticBody);
 
 	int background6[20] = {
-		161, 96,
-		161, 62,
-		163, 59,
-		166, 58,
-		169, 59,
-		171, 62,
-		171, 96,
-		169, 99,
-		165, 100,
-		163, 99
+		161+10, 96+3,
+		161+10, 62+3,
+		163+10, 59+3,
+		166+10, 58+3,
+		169+10, 59+3,
+		171+10, 62+3,
+		171+10, 96+3,
+		169+10, 99+3,
+		165+10, 100+3,
+		163+10, 99+3
 	};
 	PhysBody* colliderb6 = App->physics->CreateChain(0, 0, background6, 20, 0x0001, 0x0002);
 	colliderb6->body->SetType(b2_staticBody);
 
 	int background7[20] = {
-		191, 96,
-		191, 62,
-		193, 59,
-		196, 58,
-		199, 59,
-		201, 62,
-		201, 96,
-		199, 99,
-		195, 100,
-		193, 99
+		191+12, 96+3,
+		191+12, 62+3,
+		193+12, 59+3,
+		196+12, 58+3,
+		199+12, 59+3,
+		201+12, 62+3,
+		201+12, 96+3,
+		199+12, 99+3,
+		195+12, 100+3,
+		193+12, 99+3
 	};
 	PhysBody* colliderb7 = App->physics->CreateChain(0, 0, background7, 20, 0x0001, 0x0002);
 	colliderb7->body->SetType(b2_staticBody);
 
-	bouncing_circle1->pb = App->physics->CreateCircle(116, 153, 20, b2_staticBody, 0x0001, 0x0002);
-	bouncing_circle2->pb = App->physics->CreateCircle(168, 190, 20, b2_staticBody, 0x0001, 0x0002);
-	bouncing_circle3->pb = App->physics->CreateCircle(219, 143, 20, b2_staticBody, 0x0001, 0x0002);
+
+	int testKicker[6] = {
+		12,-10,
+		30,-5,
+		12,5,
+	};
+
+	bouncing_circle1->pb = App->physics->CreateCircle(116+7, 153+6, 20, b2_staticBody, 0x0001, 0x0002);
+	bouncing_circle2->pb = App->physics->CreateCircle(168+7, 190+6, 20, b2_staticBody, 0x0001, 0x0002);
+	bouncing_circle3->pb = App->physics->CreateCircle(219+15,143+6, 20, b2_staticBody, 0x0001, 0x0002);
 	//360,52 Default position
 	ball->pb = App->physics->CreateCircle(365, 352, 7,b2_dynamicBody, 0x0002, 0x0001);
+
+	left_kicker_coll = App->physics->CreateRevoluteJointPoly(10, testKicker, 6, 112, 485, 10, 10, 40, 320, 250, 0, 0x0003, 0x0002);
 
 }
 
