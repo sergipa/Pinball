@@ -39,7 +39,7 @@ bool j1Map::Start()
 {
 	bool ret = true;
 	
-	// Background 1
+	// Background
 	bg1 = new Sprite(App->tex->Load("images/Background.png"), 0, 0, 395, 537, 0, 0);
 	//Ball
 	ball = new Sprite(App->tex->Load("images/Ball.png"), 0, 0, 16, 16);
@@ -49,6 +49,20 @@ bool j1Map::Start()
 	bouncing_circle2 = new Sprite(App->tex->Load("images/Ball.png"), 0, 0, 62, 62);
 	bouncing_circle3 = new Sprite(App->tex->Load("images/Ball.png"), 0, 0, 62, 62);
 
+	//Kickers
+	kickerLeft = new Sprite(App->tex->Load("images/kickerLeft.png"), 0, 0, 50, 31, 112, 485);
+	kickerRight = new Sprite(App->tex->Load("images/kickerRight.png"), 0, 0, 50, 31, 193, 485);
+
+	//Bouncers
+	bouncerLeft = new Sprite(App->tex->Load("images/bouncerIdle.png"), 0, 0, 39, 40, 102, 138);
+	bouncerRight = new Sprite(App->tex->Load("images/bouncerIdle.png"), 0, 0, 39, 40, 212, 129);
+	bouncerMid = new Sprite(App->tex->Load("images/bouncerIdle.png"), 0, 0, 39, 40, 157, 177);
+	bouncersbgOn = new Sprite(App->tex->Load("images/3MidCerclesOn.png"), 0, 0, 179, 117, 86, 114);
+	bouncersbgOff = new Sprite(App->tex->Load("images/3MidCerclesOff.png"), 0, 0, 179, 117, 86, 114);
+	bouncerHitLeft = new Sprite(App->tex->Load("images/bouncerHit.png"), 0, 0, 39, 39, 0, 0);
+	bouncerHitRight = new Sprite(App->tex->Load("images/bouncerHit.png"), 0, 0, 39, 39, 0, 0);
+	bouncerHitMid = new Sprite(App->tex->Load("images/bouncerHit.png"), 0, 0, 39, 39, 0, 0);
+
 	return ret;
 }
 
@@ -56,88 +70,65 @@ void j1Map::CreateColliders()
 {
 
 	// Background standalone colliders
-	int background[158] = {
-		12, 424,
-		105, 494,
-		103, 531,
-		219, 531,
-		222, 497,
-		318, 423,
-		318, 312,
-		278, 277,
-		317, 262,
-		317, 254,
-		313, 251,
-		317, 246,
-		305, 171,
-		320, 86,
-		319, 76,
-		314, 68,
-		307, 59,
-		297, 52,
-		285, 49,
-		268, 48,
-		251, 52,
-		239, 61,
-		232, 75,
-		228, 96,
-		220, 96,
-		220, 42,
-		288, 41,
-		295, 42,
-		302, 44,
-		309, 47,
-		319, 55,
-		324, 64,
-		328, 74,
-		329, 81,
-		329, 494,
-		348, 494,
-		348, 67,
-		344, 55,
-		338, 42,
-		325, 32,
-		315, 26,
-		303, 25,
-		50, 25,
-		42, 28,
-		33, 31,
-		25, 37,
-		19, 47,
-		14, 56,
+	int background[112] = {
+		355, 527,
+		374, 527,
+		374, 68,
+		366, 50,
+		354, 36,
+		337, 27,
+		324, 24,
+		52, 24,
+		35, 31,
+		20, 45,
 		11, 64,
-		10, 74,
-		10, 87,
-		12, 97,
-		28, 136,
-		50, 187,
-		61, 214,
-		62, 219,
-		64, 226,
-		65, 233,
-		65, 240,
-		62, 249,
-		57, 257,
-		52, 262,
-		42, 238,
-		39, 221,
-		39, 192,
-		41, 168,
-		14, 154,
-		16, 173,
-		12, 216,
-		14, 235,
-		19, 259,
-		31, 289,
-		12, 311,
-		12, 354,
-		12, 370,
-		12, 381,
-		12, 393,
-		12, 405,
-		12, 416
+		9, 81,
+		12, 101,
+		19, 120,
+		25, 135,
+		37, 161,
+		50, 190,
+		58, 209,
+		66, 229,
+		69, 244,
+		67, 257,
+		61, 269,
+		55, 278,
+		44, 294,
+		33, 310,
+		22, 320,
+		10, 333,
+		10, 451,
+		116, 532,
+		116, 600,
+		237, 600,
+		240, 530,
+		341, 452,
+		341, 333,
+		297, 296,
+		339, 278,
+		329, 184,
+		341, 97,
+		339, 80,
+		331, 66,
+		319, 55,
+		301, 50,
+		273, 52,
+		259, 60,
+		248, 77,
+		246, 89,
+		243, 100,
+		235, 100,
+		235, 47,
+		237, 42,
+		308, 42,
+		319, 45,
+		332, 50,
+		342, 56,
+		350, 68,
+		355, 80
 	};
-	PhysBody* colliderb1 = App->physics->CreateChain(0, 0, background, 158, 0x0001, 0x0002);
+	PhysBody* colliderb1 = App->physics->CreateChain(0, 0, background, 112, 0x0001, 0x0002);
 	colliderb1->body->SetType(b2_staticBody);
 		int big_kicker_left_points[24] = {
 		77, 0,
@@ -179,37 +170,37 @@ void j1Map::CreateColliders()
 	colliderb3->body->SetType(b2_staticBody);
 
 	int background4[30] = {
-		50, 118,
-		111, 93,
-		111, 46,
-		107, 41,
-		65, 42,
-		55, 45,
-		47, 49,
-		40, 54,
-		35, 60,
-		31, 70,
-		31, 78,
-		32, 90,
-		34, 95,
-		39, 105,
-		44, 112
+		50, 122,
+		111, 97,
+		111, 50,
+		107, 45,
+		65, 46,
+		55, 49,
+		47, 53,
+		40, 58,
+		35, 64,
+		31, 74,
+		31, 82,
+		32, 94,
+		34, 99,
+		39, 109,
+		44, 116
 	};
 
 	PhysBody* colliderb4 = App->physics->CreateChain(0, 0, background4, 30, 0x0001, 0x0002);
 	colliderb4->body->SetType(b2_staticBody);
 
 	int background5[20] = {
-		131, 96,
-		131, 62,
-		133, 59,
-		136, 58,
-		139, 59,
-		141, 62,
-		141, 96,
-		139, 99,
-		135, 100,
-		133, 99
+		140, 96,
+		140, 62,
+		142, 59,
+		145, 58,
+		148, 59,
+		150, 62,
+		150, 96,
+		148, 99,
+		144, 100,
+		142, 99
 	};
 	PhysBody* colliderb5 = App->physics->CreateChain(0, 0, background5, 20, 0x0001, 0x0002);
 	colliderb5->body->SetType(b2_staticBody);
@@ -247,8 +238,8 @@ void j1Map::CreateColliders()
 	bouncing_circle1->pb = App->physics->CreateCircle(116, 153, 20, b2_staticBody, 0x0001, 0x0002);
 	bouncing_circle2->pb = App->physics->CreateCircle(168, 190, 20, b2_staticBody, 0x0001, 0x0002);
 	bouncing_circle3->pb = App->physics->CreateCircle(219, 143, 20, b2_staticBody, 0x0001, 0x0002);
-	//330,52 Default position
-	ball->pb = App->physics->CreateCircle(330, 52, 7,b2_dynamicBody, 0x0002, 0x0001);
+	//360,52 Default position
+	ball->pb = App->physics->CreateCircle(365, 352, 7,b2_dynamicBody, 0x0002, 0x0001);
 
 }
 
@@ -256,6 +247,12 @@ void j1Map::Draw()
 {
 	Blit(bg1->texture, bg1->pos.x, bg1->pos.y, &bg1->rect);
 	Blit(ball->texture, METERS_TO_PIXELS(ball->pb->body->GetPosition().x-8), METERS_TO_PIXELS(ball->pb->body->GetPosition().y-8), &ball->rect);
+	Blit(kickerLeft->texture, kickerLeft->pos.x, kickerLeft->pos.y, &kickerLeft->rect);
+	Blit(kickerRight->texture, kickerRight->pos.x, kickerRight->pos.y, &kickerRight->rect);
+	Blit(bouncersbgOn->texture, bouncersbgOn->pos.x, bouncersbgOn->pos.y, &bouncersbgOn->rect);
+	Blit(bouncerLeft->texture, bouncerLeft->pos.x, bouncerLeft->pos.y, &bouncerLeft->rect);
+	Blit(bouncerRight->texture, bouncerRight->pos.x, bouncerRight->pos.y, &bouncerRight->rect);
+	Blit(bouncerMid->texture, bouncerMid->pos.x, bouncerMid->pos.y, &bouncerMid->rect);
 }
 
 // Called before quitting

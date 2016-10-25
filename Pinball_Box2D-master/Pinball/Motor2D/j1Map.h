@@ -75,6 +75,16 @@ public:
 	Sprite*		 bouncing_circle1;
 	Sprite*		 bouncing_circle2;
 	Sprite*		 bouncing_circle3;
+	Sprite*		 kickerLeft;
+	Sprite*		 kickerRight;
+	Sprite*		 bouncersbgOn;
+	Sprite*		 bouncersbgOff;
+	Sprite*		 bouncerLeft;
+	Sprite*		 bouncerRight;
+	Sprite*		 bouncerMid;
+	Sprite*		 bouncerHitLeft;
+	Sprite*		 bouncerHitRight;
+	Sprite*		 bouncerHitMid;
 
 	b2RevoluteJoint*		 big_left_kicker_coll;
 
