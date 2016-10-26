@@ -101,8 +101,7 @@ bool j1Scene::Update(float dt)
 	else {
 		App->map->right_top_kicker_coll->SetMotorSpeed(200);
 	}
-<<<<<<< HEAD
-=======
+
 
 	//Spring
 	if ((App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)) {
@@ -114,7 +113,7 @@ bool j1Scene::Update(float dt)
 	else {
 		App->map->spring->SetMotorSpeed(20);
 	}
->>>>>>> origin/master
+
 
 	App->map->Draw();
 

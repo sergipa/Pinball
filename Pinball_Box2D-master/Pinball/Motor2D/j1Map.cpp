@@ -29,14 +29,7 @@ bool j1Map::Awake(pugi::xml_node& config)
 }
 
 bool j1Map::PostUpdate() {
-<<<<<<< HEAD
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
-		b2Vec2 force(0.0f, -100.0f);
-		b2Vec2 ball_pos(ball->pb->body->GetWorldCenter());
-		ball->pb->body->ApplyForce(force, ball_pos,true);
-	}
-=======
->>>>>>> origin/master
+
 
 	uint now = SDL_GetTicks();
 
@@ -68,11 +61,9 @@ void j1Map::ResetGame() {
 	}
 	if (remainingBalls > 0) {
 		App->map->ball->pb->body->SetAngularVelocity(0);
-<<<<<<< HEAD
-		App->map->ball->pb->body->SetTransform(b2Vec2(PIXEL_TO_METERS(368), PIXEL_TO_METERS(352)), 0);
-=======
+
 		App->map->ball->pb->body->SetTransform(b2Vec2(PIXEL_TO_METERS(365), PIXEL_TO_METERS(460)), 0);
->>>>>>> origin/master
+
 	}
 	App->audio->PlayFx(chargeBallSound);
 }
@@ -475,13 +466,9 @@ void j1Map::CreateColliders()
 
 	right_top_kicker_coll = App->physics->CreateRevoluteJointPoly(7, kickerRight, 22, 332, 274, 38, 8, 2, -60, 20, 0, 0x0001, 0x0002);
 
-<<<<<<< HEAD
 	
 	endBall = App->physics->CreateRectangleSensor(170, 565, 150, 1, 0x0001, 0x0002);
-=======
 
-	endBall = App->physics->CreateRectangleSensor(170, 585, 150, 1, 0x0001, 0x0002);
->>>>>>> origin/master
 	endBall->listener = App->map;
 
 	bouncerLeftCheck =  App->physics->CreateRectangleSensor(123, 158, 32, 43, 0x0001, 0x0002);
@@ -507,7 +494,7 @@ void j1Map::CreateColliders()
 
 	superFreakActivator5->pb = App->physics->CreateRectangleSensor(97, 114, 10, 7, 0x0001, 0x0002);
 	superFreakActivator5->pb->listener = App->map;
-<<<<<<< HEAD
+
 	points200Off1->pb = App->physics->CreateRectangleSensor(133, 51, 5, 5, 0x0001, 0x0002);
 	points200Off1->pb->listener = App->map;
 	points200Off2->pb = App->physics->CreateRectangleSensor(162, 51, 5, 5, 0x0001, 0x0002);
@@ -515,19 +502,7 @@ void j1Map::CreateColliders()
 	points200Off3->pb = App->physics->CreateRectangleSensor(193, 51, 5, 5, 0x0001, 0x0002);
 	points200Off3->pb->listener = App->map;
 	points200Off4->pb = App->physics->CreateRectangleSensor(224, 51, 5, 5, 0x0001, 0x0002);
-=======
 
-	points200Off1->pb = App->physics->CreateRectangleSensor(133, 51, 10, 10, 0x0001, 0x0002);
-	points200Off1->pb->listener = App->map;
-
-	points200Off2->pb = App->physics->CreateRectangleSensor(162, 51, 10, 10, 0x0001, 0x0002);
-	points200Off2->pb->listener = App->map;
-
-	points200Off3->pb = App->physics->CreateRectangleSensor(193, 51, 10, 10, 0x0001, 0x0002);
-	points200Off3->pb->listener = App->map;
-
-	points200Off4->pb = App->physics->CreateRectangleSensor(224, 51, 10, 10, 0x0001, 0x0002);
->>>>>>> origin/master
 	points200Off4->pb->listener = App->map;
 }
 
