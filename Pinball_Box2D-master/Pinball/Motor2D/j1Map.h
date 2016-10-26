@@ -69,6 +69,8 @@ public:
 
 	void Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section);
 
+	void OnCollision(PhysBody * bodyA, PhysBody * bodyB);
+
 public:
 	Sprite*		 bgAbove;
 	Sprite*		 bgBelow;
@@ -84,9 +86,6 @@ public:
 	Sprite*		 bouncerLeft;
 	Sprite*		 bouncerRight;
 	Sprite*		 bouncerMid;
-	Sprite*		 bouncerHitLeft;
-	Sprite*		 bouncerHitRight;
-	Sprite*		 bouncerHitMid;
 	Sprite*		 cercleBelowMidGirl;
 	Sprite*		 midGirl;
 	Sprite*		 midBoys;
@@ -141,9 +140,23 @@ public:
 	Sprite*		 x4IndicatorOn;
 	Sprite*		 rightArrow;
 	Sprite*		 doubleArrow;
+	Sprite*		 points200Off1;
+	Sprite*		 points200Off2;
+	Sprite*		 points200Off3;
+	Sprite*		 points200Off4;
 
 	b2RevoluteJoint*		 left_kicker_coll;
 	b2RevoluteJoint*		 right_low_kicker_coll;
+
+	PhysBody* endBall;
+	PhysBody* bouncerLeftCheck;
+	PhysBody* bouncerRightCheck;
+	PhysBody* bouncerMidCheck;
+	PhysBody* superFreakActivator1Check;
+	PhysBody* superFreakActivator2Check;
+	PhysBody* superFreakActivator3Check;
+	PhysBody* superFreakActivator4Check;
+	PhysBody* superFreakActivator5Check;
 
 };
 

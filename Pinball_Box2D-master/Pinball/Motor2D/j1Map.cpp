@@ -51,14 +51,11 @@ bool j1Map::Start()
 	kickerTopRight = new Sprite(App->tex->Load("images/kickerRight.png"), 0, 0, 50, 31, 292, 267);
 
 	//Bouncers
-	bouncerLeft = new Sprite(App->tex->Load("images/bouncerIdle.png"), 0, 0, 39, 40, 106, 138);
-	bouncerRight = new Sprite(App->tex->Load("images/bouncerIdle.png"), 0, 0, 39, 40, 216, 129);
-	bouncerMid = new Sprite(App->tex->Load("images/bouncerIdle.png"), 0, 0, 39, 40, 161, 178);
+	bouncerLeft = new Sprite(App->tex->Load("images/bouncerIdle.png"), 0, 0, 39, 40, 104, 138);
+	bouncerRight = new Sprite(App->tex->Load("images/bouncerIdle.png"), 0, 0, 39, 40, 214, 129);
+	bouncerMid = new Sprite(App->tex->Load("images/bouncerIdle.png"), 0, 0, 39, 40, 159, 178);
 	bouncersbgOn = new Sprite(App->tex->Load("images/3MidCerclesOn.png"), 0, 0, 179, 118, 89, 114);
 	bouncersbgOff = new Sprite(App->tex->Load("images/3MidCerclesOff.png"), 0, 0, 179, 118, 89, 114);
-	bouncerHitLeft = new Sprite(App->tex->Load("images/bouncerHit.png"), 0, 0, 39, 39, 0, 0);
-	bouncerHitRight = new Sprite(App->tex->Load("images/bouncerHit.png"), 0, 0, 39, 39, 0, 0);
-	bouncerHitMid = new Sprite(App->tex->Load("images/bouncerHit.png"), 0, 0, 39, 39, 0, 0);
 	bouncerBottomLeft = new Sprite(App->tex->Load("images/bouncerBottomLeft.png"), 0, 0, 56, 69, 66, 386);
 	bouncerBottomRight = new Sprite(App->tex->Load("images/bouncerBottomRight.png"), 0, 0, 56, 69, 229, 386);
 	bouncerBottomLeftStick = new Sprite(App->tex->Load("images/bouncerBottomLeftStick.png"), 0, 0, 52, 60, 72, 388);
@@ -97,6 +94,10 @@ bool j1Map::Start()
 	rightBlueActivator3 = new Sprite(App->tex->Load("images/rightBlueActivator.png"), 0, 0, 18, 21, 322, 182);
 	rightArrow = new Sprite(App->tex->Load("images/topRightArrowIdle.png"), 0, 0, 29, 36, 294, 165);
 	doubleArrow = new Sprite(App->tex->Load("images/doubleArrow.png"), 0, 0, 35, 60, 28, 114);
+	points200Off1 = new Sprite(App->tex->Load("images/200PointsOff.png"), 0, 0, 18, 18, 123, 41);
+	points200Off2 = new Sprite(App->tex->Load("images/200PointsOff.png"), 0, 0, 18, 18, 152, 41);
+	points200Off3 = new Sprite(App->tex->Load("images/200PointsOff.png"), 0, 0, 18, 18, 183, 41);
+	points200Off4 = new Sprite(App->tex->Load("images/200PointsOff.png"), 0, 0, 18, 18, 214, 41);
 
 	//Letters
 	superFreakYellow_S = new Sprite(App->tex->Load("images/superFreakYellow_S.png"), 0, 0, 18, 18, 53, 173);
@@ -304,19 +305,133 @@ void j1Map::CreateColliders()
 		45, 13,
 		49, 11
 	};
-	bouncerLeft->pb = App->physics->CreateCircle(126, 153+6, 20, b2_staticBody, 0x0001, 0x0002);
-	bouncerMid->pb = App->physics->CreateCircle(180, 198, 20, b2_staticBody, 0x0001, 0x0002);
-	bouncerRight->pb = App->physics->CreateCircle(236,143+6, 20, b2_staticBody, 0x0001, 0x0002);
+	bouncerLeft->pb = App->physics->CreateCircle(124, 159, 20, b2_staticBody, 0x0001, 0x0002);
+	bouncerMid->pb = App->physics->CreateCircle(178, 198, 20, b2_staticBody, 0x0001, 0x0002);
+	bouncerRight->pb = App->physics->CreateCircle(234,149, 20, b2_staticBody, 0x0001, 0x0002);
 	//360,52 Default position
 	ball->pb = App->physics->CreateCircle(365, 352, 7,b2_dynamicBody, 0x0002, 0x0001);
 
 	left_kicker_coll = App->physics->CreateRevoluteJointPoly(7, kickerLeft, 18, 119, 490, 10, 10, 60, -5, 20, 0, 0x0001, 0x0002);
 	right_low_kicker_coll = App->physics->CreateRevoluteJointPoly(7, kickerRight, 22, 234, 490, 38, 8, 0, -250, 20, 0, 0x0004, 0x0008);
-
+	
+	endBall = App->physics->CreateRectangleSensor(170, 535, 150, 2, 0x0001, 0x0002);
+	endBall->listener = App->map;
+	bouncerLeftCheck =  App->physics->CreateRectangleSensor(123, 156, 32, 32, 0x0001, 0x0002);
+	bouncerLeftCheck->listener = App->map;
+	bouncerRightCheck = App->physics->CreateRectangleSensor(233, 146, 32, 32, 0x0001, 0x0002);
+	bouncerRightCheck->listener = App->map;
+	bouncerMidCheck = App->physics->CreateRectangleSensor(178, 196, 32, 32, 0x0001, 0x0002);
+	bouncerMidCheck->listener = App->map;
+	superFreakActivator1->pb = App->physics->CreateRectangleSensor(23, 329, 10, 7, 0x0001, 0x0002);
+	superFreakActivator1->pb->listener = App->map;
+	superFreakActivator2->pb = App->physics->CreateRectangleSensor(305, 309, 10, 7, 0x0001, 0x0002);
+	superFreakActivator2->pb->listener = App->map;
+	superFreakActivator3->pb = App->physics->CreateRectangleSensor(326, 328, 10, 7, 0x0001, 0x0002);
+	superFreakActivator3->pb->listener = App->map;
+	superFreakActivator4->pb = App->physics->CreateRectangleSensor(69, 126, 10, 7, 0x0001, 0x0002);
+	superFreakActivator4->pb->listener = App->map;
+	superFreakActivator5->pb = App->physics->CreateRectangleSensor(97, 114, 10, 7, 0x0001, 0x0002);
+	superFreakActivator5->pb->listener = App->map;
+	points200Off1->pb = App->physics->CreateRectangleSensor(133, 51, 10, 10, 0x0001, 0x0002);
+	points200Off1->pb->listener = App->map;
+	points200Off2->pb = App->physics->CreateRectangleSensor(162, 51, 10, 10, 0x0001, 0x0002);
+	points200Off2->pb->listener = App->map;
+	points200Off3->pb = App->physics->CreateRectangleSensor(193, 51, 10, 10, 0x0001, 0x0002);
+	points200Off3->pb->listener = App->map;
+	points200Off4->pb = App->physics->CreateRectangleSensor(224, 51, 10, 10, 0x0001, 0x0002);
+	points200Off4->pb->listener = App->map;
 }
 
-void j1Map::Draw()
+void j1Map::OnCollision(PhysBody * bodyA, PhysBody * bodyB)
 {
+	if (bodyA == endBall) {
+		if (bodyB == ball->pb) {
+
+		}
+	}
+	else if (bodyA == bouncerLeftCheck) {
+		if (bodyB == ball->pb) {
+			if (bouncerLeftCheck) {
+				bouncerLeft->texture = App->tex->Load("images/bouncerHit.png");
+				bouncerLeftCheck->body->GetFixtureList()->SetRestitution(1.05);
+			}
+		}
+	}
+	else if (bodyA == bouncerRightCheck) {
+		if (bodyB == ball->pb) {
+			if (bouncerRightCheck) {
+				bouncerRight->texture = App->tex->Load("images/bouncerHit.png");
+				bouncerRightCheck->body->GetFixtureList()->SetRestitution(1.05);
+			}
+		}
+	}
+	else if (bodyA == bouncerMidCheck) {
+		if (bodyB == ball->pb) {
+			if (bouncerMidCheck) {
+				bouncerMid->texture = App->tex->Load("images/bouncerHit.png");
+				bouncerMidCheck->body->GetFixtureList()->SetRestitution(1.05);
+			}
+		}
+	}
+	else if (bodyA == superFreakActivator1->pb) {
+		if (bodyB == ball->pb) {
+			superFreakActivator1->texture = App->tex->Load("images/superFreakActivatorOff.png");
+			superFreakYellow_S2->texture = App->tex->Load("images/superFreakPink_S.png");
+			superFreakYellow_S->texture = App->tex->Load("images/superFreakPink_S.png");
+		}
+	}
+	else if (bodyA == superFreakActivator2->pb) {
+		if (bodyB == ball->pb) {
+			superFreakActivator2->texture = App->tex->Load("images/superFreakActivatorRightOff.png");
+			superFreakYellow_E3->texture = App->tex->Load("images/superFreakPink_E.png");
+			superFreakYellow_E->texture = App->tex->Load("images/superFreakPink_E.png");
+		}
+	}
+	else if (bodyA == superFreakActivator3->pb) {
+		if (bodyB == ball->pb) {
+			superFreakActivator3->texture = App->tex->Load("images/superFreakActivatorRightOff.png");
+			superFreakYellow_R3->texture = App->tex->Load("images/superFreakPink_R.png");
+			superFreakYellow_R->texture = App->tex->Load("images/superFreakPink_R.png");
+		}
+	}
+	else if (bodyA == superFreakActivator4->pb){
+		if (bodyB == ball->pb) {
+			superFreakActivator4->texture = App->tex->Load("images/superFreakActivatorTopOff.png");
+			superFreakYellow_U2->texture = App->tex->Load("images/superFreakPink_U.png");
+			superFreakYellow_U->texture = App->tex->Load("images/superFreakPink_U.png");
+		}
+	}
+	else if (bodyA == superFreakActivator5->pb) {
+		if (bodyB == ball->pb) {
+			superFreakActivator5->texture = App->tex->Load("images/superFreakActivatorTopOff.png");
+			superFreakYellow_P2->texture = App->tex->Load("images/superFreakPink_P.png");
+			superFreakYellow_P->texture = App->tex->Load("images/superFreakPink_P.png");
+		}
+	}
+	else if (bodyA == points200Off1->pb) {
+		if (bodyB == ball->pb) {
+			points200Off1->texture = App->tex->Load("images/200PointsOn.png");
+		}
+	}
+	else if (bodyA == points200Off2->pb) {
+		if (bodyB == ball->pb) {
+			points200Off2->texture = App->tex->Load("images/200PointsOn.png");
+		}
+	}
+	else if (bodyA == points200Off3->pb) {
+		if (bodyB == ball->pb) {
+			points200Off3->texture = App->tex->Load("images/200PointsOn.png");
+		}
+	}
+	else if (bodyA == points200Off4->pb) {
+		if (bodyB == ball->pb) {
+			points200Off4->texture = App->tex->Load("images/200PointsOn.png");
+		}
+	}
+}	
+
+void j1Map::Draw()
+	{
 	Blit(bgBelow->texture, bgBelow->pos.x, bgBelow->pos.y, &bgBelow->rect);
 	Blit(cercleBelowMidGirl->texture, cercleBelowMidGirl->pos.x, cercleBelowMidGirl->pos.y, &cercleBelowMidGirl->rect);
 	Blit(bouncersbgOn->texture, bouncersbgOn->pos.x, bouncersbgOn->pos.y, &bouncersbgOn->rect);
@@ -361,6 +476,10 @@ void j1Map::Draw()
 	Blit(x2Indicator3Off->texture, x2Indicator3Off->pos.x, x2Indicator3Off->pos.y, &x2Indicator3Off->rect);
 	Blit(x3Indicator3Off->texture, x3Indicator3Off->pos.x, x3Indicator3Off->pos.y, &x3Indicator3Off->rect);
 	Blit(x4Indicator3Off->texture, x4Indicator3Off->pos.x, x4Indicator3Off->pos.y, &x4Indicator3Off->rect);
+	Blit(points200Off1->texture, points200Off1->pos.x, points200Off1->pos.y, &points200Off1->rect);
+	Blit(points200Off2->texture, points200Off2->pos.x, points200Off2->pos.y, &points200Off2->rect);
+	Blit(points200Off3->texture, points200Off3->pos.x, points200Off3->pos.y, &points200Off3->rect);
+	Blit(points200Off4->texture, points200Off4->pos.x, points200Off4->pos.y, &points200Off4->rect);
 	Blit(rightArrow->texture, rightArrow->pos.x, rightArrow->pos.y, &rightArrow->rect);
 	Blit(superFreakYellow_S->texture, superFreakYellow_S->pos.x, superFreakYellow_S->pos.y, &superFreakYellow_S->rect);
 	Blit(superFreakYellow_U->texture, superFreakYellow_U->pos.x, superFreakYellow_U->pos.y, &superFreakYellow_U->rect);

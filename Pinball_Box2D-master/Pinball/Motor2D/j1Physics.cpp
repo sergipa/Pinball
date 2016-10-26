@@ -66,7 +66,7 @@ bool j1Physics::PreUpdate()
 		if (c->GetFixtureA()->IsSensor() && c->IsTouching())
 		{
 			PhysBody* pb1 = (PhysBody*)c->GetFixtureA()->GetBody()->GetUserData();
-			PhysBody* pb2 = (PhysBody*)c->GetFixtureA()->GetBody()->GetUserData();
+			PhysBody* pb2 = (PhysBody*)c->GetFixtureB()->GetBody()->GetUserData();
 			if (pb1 && pb2 && pb1->listener)
 				pb1->listener->OnCollision(pb1, pb2);
 		}
@@ -230,7 +230,7 @@ PhysBody* j1Physics::CreateRectangle(int x, int y, int width, int height)
 	return pbody;
 }
 
-PhysBody * j1Physics::CreateRectangleSensor(int x, int y, int width, int height)
+PhysBody * j1Physics::CreateRectangleSensor(int x, int y, int width, int height, uint mask, uint category)
 {
 	b2BodyDef body;
 	body.type = b2_staticBody;
@@ -245,6 +245,8 @@ PhysBody * j1Physics::CreateRectangleSensor(int x, int y, int width, int height)
 	fixture.shape = &box;
 	fixture.density = 1.0f;
 	fixture.isSensor = true;
+	fixture.filter.maskBits = mask;
+	fixture.filter.categoryBits = category;
 
 	b->CreateFixture(&fixture);
 
@@ -446,11 +448,13 @@ void j1Physics::BeginContact(b2Contact * contact)
 	PhysBody* physA = (PhysBody*)contact->GetFixtureA()->GetBody()->GetUserData();
 	PhysBody* physB = (PhysBody*)contact->GetFixtureB()->GetBody()->GetUserData();
 
-	if (physA && physA->listener != NULL)
+	if (physA && physA->listener != NULL) {
 		physA->listener->OnCollision(physA, physB);
-
-	if (physB && physB->listener != NULL)
+	}
+		
+	if (physB && physB->listener != NULL) {
 		physB->listener->OnCollision(physB, physA);
+	}
 }
 
 void PhysBody::GetPosition(int & x, int & y) const
