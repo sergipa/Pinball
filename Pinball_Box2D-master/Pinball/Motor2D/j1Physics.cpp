@@ -372,7 +372,7 @@ b2RevoluteJoint* j1Physics::CreateRevoluteJoint(int radius, int width, int heigh
 	
 	return m_joint;
 }
-b2RevoluteJoint* j1Physics::CreateRevoluteJointPoly(int radius, int* points, int size, int posx, int posy, int despacement_x,int despacement_y, int upper_angle, int lower_angle, int max_torque, int speed, uint16 mask, uint16 category)
+b2RevoluteJoint* j1Physics::CreateRevoluteJointPoly(int radius, int* points, int size, int posx, int posy, int desplacement_x,int desplacement_y, int upper_angle, int lower_angle, int max_torque, int speed, uint16 mask, uint16 category)
 {
 	//body and fixture defs - the common parts
 	b2BodyDef bodyDef;
@@ -415,7 +415,7 @@ b2RevoluteJoint* j1Physics::CreateRevoluteJointPoly(int radius, int* points, int
 	revoluteJointDef.bodyB = m_bodyB;
 	revoluteJointDef.collideConnected = false;
 	revoluteJointDef.type = e_revoluteJoint;
-	revoluteJointDef.localAnchorA.Set(PIXEL_TO_METERS(despacement_x), PIXEL_TO_METERS(despacement_y));
+	revoluteJointDef.localAnchorA.Set(PIXEL_TO_METERS(desplacement_x), PIXEL_TO_METERS(desplacement_y));
 
 	if (lower_angle != NULL && upper_angle != NULL)
 	{
