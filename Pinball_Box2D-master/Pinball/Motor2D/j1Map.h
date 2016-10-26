@@ -167,12 +167,14 @@ public:
 	PhysBody* superFreakActivator4Check;
 	PhysBody* superFreakActivator5Check;
 
-<<<<<<< HEAD
 	uint resetImagesTimer;
+	uint remainingBalls;
+	uint score;
+
+	bool avoidDoubleCheck;
 
 	p2List<Sprite*> resetImagesList;
-=======
->>>>>>> origin/master
+
 };
 
 #endif // __j1MAP_H__

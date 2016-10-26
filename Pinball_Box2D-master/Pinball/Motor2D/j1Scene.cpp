@@ -105,6 +105,11 @@ bool j1Scene::Update(float dt)
 
 	App->map->Draw();
 
+	p2SString title("Carnival Pinball   Score: %d  Balls: %d",
+		App->map->score,App->map->remainingBalls);
+
+	App->win->SetTitle(title.GetString());
+
 	if(!camera_debug)
 
 	return true;
