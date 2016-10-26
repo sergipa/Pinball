@@ -317,7 +317,7 @@ void j1Map::CreateColliders()
 	right_top_kicker_coll = App->physics->CreateRevoluteJointPoly(7, kickerRight, 22, 332, 274, 38, 8, 2, -60, 20, 0, 0x0001, 0x0002);
 
 	
-	endBall = App->physics->CreateRectangleSensor(170, 535, 150, 2, 0x0001, 0x0002);
+	endBall = App->physics->CreateRectangleSensor(170, 585, 150, 5, 0x0001, 0x0002);
 	endBall->listener = App->map;
 	bouncerLeftCheck =  App->physics->CreateRectangleSensor(123, 156, 32, 32, 0x0001, 0x0002);
 	bouncerLeftCheck->listener = App->map;
@@ -349,7 +349,8 @@ void j1Map::OnCollision(PhysBody * bodyA, PhysBody * bodyB)
 {
 	if (bodyA == endBall) {
 		if (bodyB == ball->pb) {
-
+			App->map->ball->pb->body->SetTransform(b2Vec2(PIXEL_TO_METERS(365), PIXEL_TO_METERS(352)), 0);
+			App->map->ball->pb->body->SetAngularVelocity(0);
 		}
 	}
 	else if (bodyA == bouncerLeftCheck) {

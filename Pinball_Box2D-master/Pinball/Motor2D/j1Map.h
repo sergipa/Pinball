@@ -160,7 +160,6 @@ public:
 	PhysBody* superFreakActivator4Check;
 	PhysBody* superFreakActivator5Check;
 
-
 };
 
 #endif // __j1MAP_H__
