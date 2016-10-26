@@ -8,6 +8,7 @@
 #include <math.h>
 #include "j1Physics.h"
 #include "j1Input.h"
+#include "j1Audio.h"
 
 j1Map::j1Map() : j1Module()
 {
@@ -28,12 +29,6 @@ bool j1Map::Awake(pugi::xml_node& config)
 }
 
 bool j1Map::PostUpdate() {
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
-		b2Vec2 force(0.0f, -100.0f);
-		b2Vec2 ball_pos(ball->pb->body->GetWorldCenter());
-		ball->pb->body->ApplyForce(force, ball_pos,true);
-		avoidDoubleCheck = false;
-	}
 
 	uint now = SDL_GetTicks();
 
@@ -60,7 +55,7 @@ void j1Map::ResetGame() {
 	}
 	if (remainingBalls > 0) {
 		App->map->ball->pb->body->SetAngularVelocity(0);
-		App->map->ball->pb->body->SetTransform(b2Vec2(PIXEL_TO_METERS(365), PIXEL_TO_METERS(352)), 0);
+		App->map->ball->pb->body->SetTransform(b2Vec2(PIXEL_TO_METERS(365), PIXEL_TO_METERS(460)), 0);
 	}
 }
 
@@ -258,7 +253,7 @@ void j1Map::CreateColliders()
 		350, 68,
 		355, 80
 	};
-	PhysBody* colliderb1 = App->physics->CreateChain(0, 0, background, 112, 0x0001, 0x0002);
+	PhysBody* colliderb1 = App->physics->CreateChain(0, 0,0, background, 112, 0x0001, 0x0002);
 	colliderb1->body->SetType(b2_staticBody);
 
 	int background2[20] = {
@@ -273,7 +268,7 @@ void j1Map::CreateColliders()
 		108, 491,
 		39, 438
 	};
-	PhysBody* colliderb2 = App->physics->CreateChain(0, 0, background2, 20, 0x0001, 0x0002);
+	PhysBody* colliderb2 = App->physics->CreateChain(0, 0,0, background2, 20, 0x0001, 0x0002);
 	colliderb2->body->SetType(b2_staticBody);
 
 	int background3[20] = {
@@ -288,7 +283,7 @@ void j1Map::CreateColliders()
 		243, 478,
 		311-5, 434
 	};
-	PhysBody* colliderb3 = App->physics->CreateChain(0, 0, background3, 20, 0x0001, 0x0002);
+	PhysBody* colliderb3 = App->physics->CreateChain(0, 0,0, background3, 20, 0x0001, 0x0002);
 	colliderb3->body->SetType(b2_staticBody);
 
 	int background4[30] = {
@@ -309,7 +304,7 @@ void j1Map::CreateColliders()
 		44, 116
 	};
 
-	PhysBody* colliderb4 = App->physics->CreateChain(0, 0, background4, 30, 0x0001, 0x0002);
+	PhysBody* colliderb4 = App->physics->CreateChain(0, 0,0, background4, 30, 0x0001, 0x0002);
 	colliderb4->body->SetType(b2_staticBody);
 
 	int background5[20] = {
@@ -324,7 +319,7 @@ void j1Map::CreateColliders()
 		144, 100+3,
 		142, 99+3
 	};
-	PhysBody* colliderb5 = App->physics->CreateChain(0, 0, background5, 20, 0x0001, 0x0002);
+	PhysBody* colliderb5 = App->physics->CreateChain(0, 0,0, background5, 20, 0x0001, 0x0002);
 	colliderb5->body->SetType(b2_staticBody);
 
 	int background6[20] = {
@@ -339,7 +334,7 @@ void j1Map::CreateColliders()
 		165+10, 100+3,
 		163+10, 99+3
 	};
-	PhysBody* colliderb6 = App->physics->CreateChain(0, 0, background6, 20, 0x0001, 0x0002);
+	PhysBody* colliderb6 = App->physics->CreateChain(0, 0,0, background6, 20, 0x0001, 0x0002);
 	colliderb6->body->SetType(b2_staticBody);
 
 	int background7[20] = {
@@ -354,7 +349,7 @@ void j1Map::CreateColliders()
 		195+12, 100+3,
 		193+12, 99+3
 	};
-	PhysBody* colliderb7 = App->physics->CreateChain(0, 0, background7, 20, 0x0001, 0x0002);
+	PhysBody* colliderb7 = App->physics->CreateChain(0, 0,0, background7, 20, 0x0001, 0x0002);
 	colliderb7->body->SetType(b2_staticBody);
 
 
@@ -392,8 +387,16 @@ void j1Map::CreateColliders()
 		116,452,
 		67, 421
 	};
-	PhysBody* triangle_left_coll = App->physics->CreateChain(0, 0, triangle_left, 14, 0x0001, 0x0002);
+	PhysBody* triangle_left_coll = App->physics->CreateChain(0, 0,0, triangle_left, 14, 0x0001, 0x0002);
 	triangle_left_coll->body->SetType(b2_staticBody);
+	int triangle_left_bounce[8] = {
+		74, 390,
+		76, 388,
+		120,442,
+		119,445
+	};
+	PhysBody* triangle_left_bounce_body = App->physics->CreateChain(0, 0, 2, triangle_left_bounce, 8, 0x0001, 0x0002);
+	triangle_left_bounce_body->body->SetType(b2_staticBody);
 	int triangle_right[14] = {
 		283, 390,
 		282, 388,
@@ -402,15 +405,33 @@ void j1Map::CreateColliders()
 		230, 451,
 		233, 452,
 		282, 421
-	};
-	PhysBody* triangle_right_coll = App->physics->CreateChain(0, 0, triangle_right, 14, 0x0001, 0x0002);
+	};	
+	PhysBody* triangle_right_coll = App->physics->CreateChain(0, 0,0, triangle_right, 14, 0x0001, 0x0002);
 	triangle_right_coll->body->SetType(b2_staticBody);
 
-	bouncerLeft->pb = App->physics->CreateCircle(124, 159, 20, b2_staticBody, 0x0001, 0x0002);
-	bouncerMid->pb = App->physics->CreateCircle(178, 198, 20, b2_staticBody, 0x0001, 0x0002);
-	bouncerRight->pb = App->physics->CreateCircle(234,149, 20, b2_staticBody, 0x0001, 0x0002);
-	//360,52 Default position
-	ball->pb = App->physics->CreateCircle(365, 352, 7,b2_dynamicBody, 0x0002, 0x0001);
+	int triangle_right_bounce[8] = {
+		278, 390,
+		275, 388,
+		231,442,
+		232,445
+	};
+	PhysBody* triangle_right_bounce_body = App->physics->CreateChain(0, 0, 2, triangle_right_bounce, 8, 0x0001, 0x0002);
+	triangle_right_bounce_body->body->SetType(b2_staticBody);
+
+	bouncerLeft->pb = App->physics->CreateCircle(124, 159, 20,1, b2_staticBody, 0x0001, 0x0002);
+	bouncerMid->pb = App->physics->CreateCircle(178, 198,  20, 1, b2_staticBody, 0x0001, 0x0002);
+	bouncerRight->pb = App->physics->CreateCircle(234,149, 20,1, b2_staticBody, 0x0001, 0x0002);
+
+	//Spring
+	PhysBody* bodA = App->physics->CreateRectangle(366, 460, 15, 10, 0x0001, 0x0002);
+	PhysBody* bodB = App->physics->CreateRectangle(366, 513, 15, 10, 0x0001, 0x0002);
+	bodA->body->SetType(b2_dynamicBody);			 		 	   
+
+	bodB->body->SetType(b2_staticBody);
+	spring = App->physics->CreatePrismaticJoint(bodA, bodB, b2Vec2(9, 0), b2Vec2(9, 0), 0, 50, 50, 0);
+
+	//360,352 Default position
+	ball->pb = App->physics->CreateCircle(365, 460, 7,0,b2_dynamicBody, 0x0002, 0x0001);
 
 	left_kicker_coll = App->physics->CreateRevoluteJointPoly(7, kickerLeft, 18, 119, 490, 10, 10, 60, -2, 20, 0, 0x0001, 0x0002);
 
@@ -418,31 +439,43 @@ void j1Map::CreateColliders()
 
 	right_top_kicker_coll = App->physics->CreateRevoluteJointPoly(7, kickerRight, 22, 332, 274, 38, 8, 2, -60, 20, 0, 0x0001, 0x0002);
 
-	
+
 	endBall = App->physics->CreateRectangleSensor(170, 585, 150, 1, 0x0001, 0x0002);
 	endBall->listener = App->map;
+
 	bouncerLeftCheck =  App->physics->CreateRectangleSensor(123, 158, 32, 43, 0x0001, 0x0002);
 	bouncerLeftCheck->listener = App->map;
+
 	bouncerRightCheck = App->physics->CreateRectangleSensor(233, 148, 32, 43, 0x0001, 0x0002);
 	bouncerRightCheck->listener = App->map;
+
 	bouncerMidCheck = App->physics->CreateRectangleSensor(178, 198, 32, 43, 0x0001, 0x0002);
 	bouncerMidCheck->listener = App->map;
+
 	superFreakActivator1->pb = App->physics->CreateRectangleSensor(23, 329, 10, 7, 0x0001, 0x0002);
 	superFreakActivator1->pb->listener = App->map;
+
 	superFreakActivator2->pb = App->physics->CreateRectangleSensor(305, 309, 10, 7, 0x0001, 0x0002);
 	superFreakActivator2->pb->listener = App->map;
+
 	superFreakActivator3->pb = App->physics->CreateRectangleSensor(326, 328, 10, 7, 0x0001, 0x0002);
 	superFreakActivator3->pb->listener = App->map;
+
 	superFreakActivator4->pb = App->physics->CreateRectangleSensor(69, 126, 10, 7, 0x0001, 0x0002);
 	superFreakActivator4->pb->listener = App->map;
+
 	superFreakActivator5->pb = App->physics->CreateRectangleSensor(97, 114, 10, 7, 0x0001, 0x0002);
 	superFreakActivator5->pb->listener = App->map;
+
 	points200Off1->pb = App->physics->CreateRectangleSensor(133, 51, 10, 10, 0x0001, 0x0002);
 	points200Off1->pb->listener = App->map;
+
 	points200Off2->pb = App->physics->CreateRectangleSensor(162, 51, 10, 10, 0x0001, 0x0002);
 	points200Off2->pb->listener = App->map;
+
 	points200Off3->pb = App->physics->CreateRectangleSensor(193, 51, 10, 10, 0x0001, 0x0002);
 	points200Off3->pb->listener = App->map;
+
 	points200Off4->pb = App->physics->CreateRectangleSensor(224, 51, 10, 10, 0x0001, 0x0002);
 	points200Off4->pb->listener = App->map;
 }

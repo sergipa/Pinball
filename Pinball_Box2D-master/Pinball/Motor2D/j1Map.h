@@ -156,6 +156,7 @@ public:
 	b2RevoluteJoint*		 right_low_kicker_coll;
 	b2RevoluteJoint*		 right_top_kicker_coll;
 
+	b2PrismaticJoint* spring;
 
 	PhysBody* endBall;
 	PhysBody* bouncerLeftCheck;
