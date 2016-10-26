@@ -414,7 +414,7 @@ void j1Map::CreateColliders()
 		116,452,
 		67, 421
 	};
-	PhysBody* triangle_left_coll = App->physics->CreateChain(0, 0,0, triangle_left, 14, 0x0001, 0x0002);
+	triangle_left_coll = App->physics->CreateChain(0, 0,0, triangle_left, 14, 0x0001, 0x0002);
 	triangle_left_coll->body->SetType(b2_staticBody);
 	int triangle_left_bounce[8] = {
 		74, 390,
@@ -433,7 +433,7 @@ void j1Map::CreateColliders()
 		233, 452,
 		282, 421
 	};	
-	PhysBody* triangle_right_coll = App->physics->CreateChain(0, 0,0, triangle_right, 14, 0x0001, 0x0002);
+	triangle_right_coll = App->physics->CreateChain(0, 0,0, triangle_right, 14, 0x0001, 0x0002);
 	triangle_right_coll->body->SetType(b2_staticBody);
 
 	int triangle_right_bounce[8] = {
@@ -450,12 +450,12 @@ void j1Map::CreateColliders()
 	bouncerRight->pb = App->physics->CreateCircle(234,149, 20,1, b2_staticBody, 0x0001, 0x0002);
 
 	//Spring
-	bodA = App->physics->CreateRectangle(366, 460, 15, 10, 0x0001, 0x0002);
-	bodB = App->physics->CreateRectangle(366, 513, 15, 10, 0x0001, 0x0002);
+	bodA = App->physics->CreateRectangle(366, 510, 15, 10, 0x0001, 0x0002);
+	bodB = App->physics->CreateRectangle(366, 523, 15, 10, 0x0001, 0x0002);
 	bodA->body->SetType(b2_dynamicBody);			 		 	   
 
 	bodB->body->SetType(b2_staticBody);
-	spring = App->physics->CreatePrismaticJoint(bodA, bodB, b2Vec2(9, 0), b2Vec2(9, 0), 0, 50, 50, 0);
+	spring = App->physics->CreatePrismaticJoint(bodA, bodB, b2Vec2(9, 0), b2Vec2(9, 0), 0, 25, 50, 0);
 
 	//360,352 Default position
 	ball->pb = App->physics->CreateCircle(365, 460, 7,0,b2_dynamicBody, 0x0002, 0x0001);
@@ -652,6 +652,22 @@ void j1Map::OnCollision(PhysBody * bodyA, PhysBody * bodyB)
 			}
 		}
 	}
+	else if (bodyA == triangle_left_coll) {
+		if (bodyB == ball->pb) {
+			if (!avoidDuplicated) {
+				score += 100;
+				avoidDuplicated = true;
+			}
+		}
+	}
+	else if (bodyA == triangle_right_coll) {
+		if (bodyB == ball->pb) {
+			if (!avoidDuplicated) {
+				score += 100;
+				avoidDuplicated = true;
+			}
+		}
+	}
 }	
 
 void j1Map::Draw()
@@ -672,7 +688,7 @@ void j1Map::Draw()
 	Blit(rightBlueActivator1->texture, rightBlueActivator1->pos.x, rightBlueActivator1->pos.y, &rightBlueActivator1->rect);
 	Blit(rightBlueActivator2->texture, rightBlueActivator2->pos.x, rightBlueActivator2->pos.y, &rightBlueActivator2->rect);
 	Blit(rightBlueActivator3->texture, rightBlueActivator3->pos.x, rightBlueActivator3->pos.y, &rightBlueActivator3->rect);
-	//Blit(launcher->texture, , launcher->pos.y, &launcher->rect);
+	Blit(launcher->texture, launcher->pos.x, launcher->pos.y, &launcher->rect);
 	Blit(bgAbove->texture, bgAbove->pos.x, bgAbove->pos.y, &bgAbove->rect);
 	Blit(kickerLeft->texture, kickerLeft->pos.x, kickerLeft->pos.y, &kickerLeft->rect);
 	Blit(kickerRight->texture, kickerRight->pos.x, kickerRight->pos.y, &kickerRight->rect);

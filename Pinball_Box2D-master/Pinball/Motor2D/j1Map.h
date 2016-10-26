@@ -170,6 +170,8 @@ public:
 	PhysBody* superFreakActivator3Check;
 	PhysBody* superFreakActivator4Check;
 	PhysBody* superFreakActivator5Check;
+	PhysBody* triangle_left_coll;
+	PhysBody* triangle_right_coll;
 
 	PhysBody* bodA;
 	PhysBody* bodB;
