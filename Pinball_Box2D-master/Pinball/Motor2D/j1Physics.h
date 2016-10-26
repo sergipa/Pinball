@@ -59,6 +59,7 @@ public:
 	PhysBody* CreateCircle(int x, int y, int radius,b2BodyType type, uint16 mask, uint16 category);
 	PhysBody* CreateRectangle(int x, int y, int width, int height);
 	PhysBody* CreateRectangleSensor(int x, int y, int width, int height, uint mask, uint category);
+	PhysBody* CreateChainSensor(int x, int y, int* points, int size, uint mask, uint category);
 	PhysBody* CreateChain(int x, int y, int* points, int size, uint16 mask, uint16 category);
 	PhysBody* CreatePrismaticJoint(PhysBody* Rectangle, int lower, int max, int maxMotor, int motorSpeed);
 	b2RevoluteJoint* CreateRevoluteJoint(int radius, int width, int height, int posx, int posy, int despacement, int upper_angle, int lower_angle, int max_torque, int speed, uint16 mask, uint16 category);

@@ -374,6 +374,30 @@ void j1Map::CreateColliders()
 		45, 13,
 		49, 11
 	};
+
+	int triangle_left[14] = {
+		67, 390,
+		70, 387,
+		73, 388,
+		119,447,
+		119,449,
+		116,452,
+		67, 421
+	};
+	PhysBody* triangle_left_coll = App->physics->CreateChain(0, 0, triangle_left, 14, 0x0001, 0x0002);
+	triangle_left_coll->body->SetType(b2_staticBody);
+	int triangle_right[14] = {
+		283, 390,
+		282, 388,
+		279, 389,
+		230, 448,
+		230, 451,
+		233, 452,
+		282, 421
+	};
+	PhysBody* triangle_right_coll = App->physics->CreateChain(0, 0, triangle_right, 14, 0x0001, 0x0002);
+	triangle_right_coll->body->SetType(b2_staticBody);
+
 	bouncerLeft->pb = App->physics->CreateCircle(124, 159, 20, b2_staticBody, 0x0001, 0x0002);
 	bouncerMid->pb = App->physics->CreateCircle(178, 198, 20, b2_staticBody, 0x0001, 0x0002);
 	bouncerRight->pb = App->physics->CreateCircle(234,149, 20, b2_staticBody, 0x0001, 0x0002);

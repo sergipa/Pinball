@@ -259,6 +259,39 @@ PhysBody * j1Physics::CreateRectangleSensor(int x, int y, int width, int height,
 	return pbody;
 }
 
+PhysBody * j1Physics::CreateChainSensor(int x, int y,int* points,int size,uint mask, uint category)
+{
+	b2BodyDef body;
+	body.type = b2_staticBody;
+	body.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
+
+	b2Body* b = world->CreateBody(&body);
+
+	b2Vec2* Points = new b2Vec2[size / 2];
+	for (uint i = 0; i < size / 2; ++i)
+	{
+		Points[i].x = PIXEL_TO_METERS(points[i * 2 + 0]);
+		Points[i].y = PIXEL_TO_METERS(points[i * 2 + 1]);
+	}
+	b2PolygonShape chain_shape;
+	chain_shape.Set(Points, size / 2);
+
+	b2FixtureDef fixture;
+	fixture.shape = &chain_shape;
+	fixture.density = 1.0f;
+	fixture.isSensor = true;
+	fixture.filter.maskBits = mask;
+	fixture.filter.categoryBits = category;
+
+	b->CreateFixture(&fixture);
+
+	PhysBody* pbody = new PhysBody();
+	pbody->body = b;
+	b->SetUserData(pbody);
+
+	return pbody;
+}
+
 PhysBody * j1Physics::CreateChain(int x, int y, int * points, int size, uint16 mask, uint16 category)
 {
 	b2BodyDef body;
