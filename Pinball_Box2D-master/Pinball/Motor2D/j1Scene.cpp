@@ -101,12 +101,11 @@ bool j1Scene::Update(float dt)
 	else {
 		App->map->right_top_kicker_coll->SetMotorSpeed(200);
 	}
-	
 
 	App->map->Draw();
 
 	p2SString title("Carnival Pinball   Score: %d  Balls: %d",
-		App->map->score,App->map->remainingBalls);
+		App->map->score,App->map->remainingBalls/2);
 
 	App->win->SetTitle(title.GetString());
 

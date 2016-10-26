@@ -8,6 +8,7 @@
 #include <math.h>
 #include "j1Physics.h"
 #include "j1Input.h"
+#include "j1Audio.h"
 
 j1Map::j1Map() : j1Module()
 {
@@ -32,7 +33,6 @@ bool j1Map::PostUpdate() {
 		b2Vec2 force(0.0f, -100.0f);
 		b2Vec2 ball_pos(ball->pb->body->GetWorldCenter());
 		ball->pb->body->ApplyForce(force, ball_pos,true);
-		avoidDoubleCheck = false;
 	}
 
 	uint now = SDL_GetTicks();
@@ -40,6 +40,11 @@ bool j1Map::PostUpdate() {
 	if (now - resetImagesTimer > 50) {
 		ResetImages(resetImage);
 		resetImagesTimer = SDL_GetTicks();
+	}
+
+	if (now - avoidDuplicatedTimer > 500) {
+		avoidDuplicated = false;
+		avoidDuplicatedTimer = SDL_GetTicks();
 	}
 
 	return true;
@@ -60,8 +65,9 @@ void j1Map::ResetGame() {
 	}
 	if (remainingBalls > 0) {
 		App->map->ball->pb->body->SetAngularVelocity(0);
-		App->map->ball->pb->body->SetTransform(b2Vec2(PIXEL_TO_METERS(365), PIXEL_TO_METERS(352)), 0);
+		App->map->ball->pb->body->SetTransform(b2Vec2(PIXEL_TO_METERS(368), PIXEL_TO_METERS(352)), 0);
 	}
+	App->audio->PlayFx(chargeBallSound);
 }
 
 bool j1Map::Start()
@@ -70,8 +76,12 @@ bool j1Map::Start()
 	// Background
 	bgBelow = new Sprite(App->tex->Load("images/BackgroundBelow.png"), 0, 0, 395, 537, 0, 0);
 	bgAbove = new Sprite(App->tex->Load("images/Background.png"), 0, 0, 395, 537, 0, 0);
+	
 	//Ball
 	ball = new Sprite(App->tex->Load("images/Ball.png"), 0, 0, 16, 16);
+
+	//Launcher
+	launcher = new Sprite(App->tex->Load("images/ballShooter.png"), 0, 0, 21, 39, 355, 491);
 
 	//Kickers
 	kickerLeft = new Sprite(App->tex->Load("images/kickerLeft.png"), 0, 0, 50, 31, 112, 485);
@@ -188,10 +198,24 @@ bool j1Map::Start()
 	superFreakYellow_R3->originalTexture = superFreakYellow_R3->texture;
 	resetImagesList.add(superFreakYellow_R3);
 
+	//initialize game
 	resetImagesTimer = SDL_GetTicks();
-	remainingBalls = 5;
+	avoidDuplicatedTimer = SDL_GetTicks();
+	remainingBalls = 10;
 	score = 0;
-	avoidDoubleCheck = false;
+
+	avoidDuplicated = false;
+
+	//Music
+	App->audio->PlayMusic("audio/gameMusic.mp3");
+
+	//sounds
+	bouncerSound = App->audio->LoadFx("audio/sndBouncer.mp3");
+	kickerSound = App->audio->LoadFx("audio/sndKicker.mp3");
+	chargeBallSound = App->audio->LoadFx("audio/sndLaunch.mp3");
+	launchBallSound = App->audio->LoadFx("audio/sndLaunch.mp3");
+	letterSound = App->audio->LoadFx("audio/sndLetter.mp3");
+	bottomBouncerSound = App->audio->LoadFx("audio/sndBouncer2.mp3");
 
 	return ret;
 }
@@ -419,7 +443,7 @@ void j1Map::CreateColliders()
 	right_top_kicker_coll = App->physics->CreateRevoluteJointPoly(7, kickerRight, 22, 332, 274, 38, 8, 2, -60, 20, 0, 0x0001, 0x0002);
 
 	
-	endBall = App->physics->CreateRectangleSensor(170, 585, 150, 1, 0x0001, 0x0002);
+	endBall = App->physics->CreateRectangleSensor(170, 565, 150, 1, 0x0001, 0x0002);
 	endBall->listener = App->map;
 	bouncerLeftCheck =  App->physics->CreateRectangleSensor(123, 158, 32, 43, 0x0001, 0x0002);
 	bouncerLeftCheck->listener = App->map;
@@ -437,13 +461,13 @@ void j1Map::CreateColliders()
 	superFreakActivator4->pb->listener = App->map;
 	superFreakActivator5->pb = App->physics->CreateRectangleSensor(97, 114, 10, 7, 0x0001, 0x0002);
 	superFreakActivator5->pb->listener = App->map;
-	points200Off1->pb = App->physics->CreateRectangleSensor(133, 51, 10, 10, 0x0001, 0x0002);
+	points200Off1->pb = App->physics->CreateRectangleSensor(133, 51, 5, 5, 0x0001, 0x0002);
 	points200Off1->pb->listener = App->map;
-	points200Off2->pb = App->physics->CreateRectangleSensor(162, 51, 10, 10, 0x0001, 0x0002);
+	points200Off2->pb = App->physics->CreateRectangleSensor(162, 51, 5, 5, 0x0001, 0x0002);
 	points200Off2->pb->listener = App->map;
-	points200Off3->pb = App->physics->CreateRectangleSensor(193, 51, 10, 10, 0x0001, 0x0002);
+	points200Off3->pb = App->physics->CreateRectangleSensor(193, 51, 5, 5, 0x0001, 0x0002);
 	points200Off3->pb->listener = App->map;
-	points200Off4->pb = App->physics->CreateRectangleSensor(224, 51, 10, 10, 0x0001, 0x0002);
+	points200Off4->pb = App->physics->CreateRectangleSensor(224, 51, 5, 5, 0x0001, 0x0002);
 	points200Off4->pb->listener = App->map;
 }
 
@@ -451,11 +475,8 @@ void j1Map::OnCollision(PhysBody * bodyA, PhysBody * bodyB)
 {
 	if (bodyA == endBall) {
 		if (bodyB == ball->pb) {
-			if (!avoidDoubleCheck) {
-				remainingBalls -= 1;
-				avoidDoubleCheck = true;
-				ResetGame();
-			}
+			remainingBalls -= 1;
+			ResetGame();
 		}
 	}
 	else if (bodyA == bouncerLeftCheck) {
@@ -464,6 +485,11 @@ void j1Map::OnCollision(PhysBody * bodyA, PhysBody * bodyB)
 				bouncerLeft->texture = App->tex->Load("images/bouncerHit.png");
 				bouncerLeftCheck->body->GetFixtureList()->SetRestitution(1.05);
 				resetImage = bouncerLeft;
+				if (!avoidDuplicated) {
+					score += 1000;
+					avoidDuplicated = true;
+					App->audio->PlayFx(bouncerSound);
+				}
 			}
 		}
 	}
@@ -473,6 +499,11 @@ void j1Map::OnCollision(PhysBody * bodyA, PhysBody * bodyB)
 				bouncerRight->texture = App->tex->Load("images/bouncerHit.png");
 				bouncerRightCheck->body->GetFixtureList()->SetRestitution(1.05);
 				resetImage = bouncerRight;
+				if (!avoidDuplicated) {
+					score += 1000;
+					avoidDuplicated = true;
+					App->audio->PlayFx(bouncerSound);
+				}
 			}
 		}
 	}
@@ -482,6 +513,11 @@ void j1Map::OnCollision(PhysBody * bodyA, PhysBody * bodyB)
 				bouncerMid->texture = App->tex->Load("images/bouncerHit.png");
 				bouncerMidCheck->body->GetFixtureList()->SetRestitution(1.05);
 				resetImage = bouncerMid;
+				if (!avoidDuplicated) {
+					score += 1000;
+					avoidDuplicated = true;
+					App->audio->PlayFx(bouncerSound);
+				}
 			}
 		}
 	}
@@ -490,6 +526,11 @@ void j1Map::OnCollision(PhysBody * bodyA, PhysBody * bodyB)
 			superFreakActivator1->texture = App->tex->Load("images/superFreakActivatorOff.png");
 			superFreakYellow_S2->texture = App->tex->Load("images/superFreakPink_S.png");
 			superFreakYellow_S->texture = App->tex->Load("images/superFreakPink_S.png");
+			if (!avoidDuplicated) {
+				score += 300;
+				avoidDuplicated = true;
+				App->audio->PlayFx(letterSound);
+			}
 		}
 	}
 	else if (bodyA == superFreakActivator2->pb) {
@@ -497,6 +538,11 @@ void j1Map::OnCollision(PhysBody * bodyA, PhysBody * bodyB)
 			superFreakActivator2->texture = App->tex->Load("images/superFreakActivatorRightOff.png");
 			superFreakYellow_E3->texture = App->tex->Load("images/superFreakPink_E.png");
 			superFreakYellow_E->texture = App->tex->Load("images/superFreakPink_E.png");
+			if (!avoidDuplicated) {
+				score += 300;
+				avoidDuplicated = true;
+				App->audio->PlayFx(letterSound);
+			}
 		}
 	}
 	else if (bodyA == superFreakActivator3->pb) {
@@ -504,6 +550,11 @@ void j1Map::OnCollision(PhysBody * bodyA, PhysBody * bodyB)
 			superFreakActivator3->texture = App->tex->Load("images/superFreakActivatorRightOff.png");
 			superFreakYellow_R3->texture = App->tex->Load("images/superFreakPink_R.png");
 			superFreakYellow_R->texture = App->tex->Load("images/superFreakPink_R.png");
+			if (!avoidDuplicated) {
+				score += 300;
+				App->audio->PlayFx(letterSound);
+				avoidDuplicated = true;
+			}
 		}
 	}
 	else if (bodyA == superFreakActivator4->pb){
@@ -511,6 +562,11 @@ void j1Map::OnCollision(PhysBody * bodyA, PhysBody * bodyB)
 			superFreakActivator4->texture = App->tex->Load("images/superFreakActivatorTopOff.png");
 			superFreakYellow_U2->texture = App->tex->Load("images/superFreakPink_U.png");
 			superFreakYellow_U->texture = App->tex->Load("images/superFreakPink_U.png");
+			if (!avoidDuplicated) {
+				score += 300;
+				App->audio->PlayFx(letterSound);
+				avoidDuplicated = true;
+			}
 		}
 	}
 	else if (bodyA == superFreakActivator5->pb) {
@@ -518,26 +574,47 @@ void j1Map::OnCollision(PhysBody * bodyA, PhysBody * bodyB)
 			superFreakActivator5->texture = App->tex->Load("images/superFreakActivatorTopOff.png");
 			superFreakYellow_P2->texture = App->tex->Load("images/superFreakPink_P.png");
 			superFreakYellow_P->texture = App->tex->Load("images/superFreakPink_P.png");
+			if (!avoidDuplicated) {
+				score += 300;
+				App->audio->PlayFx(letterSound);
+				avoidDuplicated = true;
+			}
 		}
 	}
 	else if (bodyA == points200Off1->pb) {
 		if (bodyB == ball->pb) {
 			points200Off1->texture = App->tex->Load("images/200PointsOn.png");
+			if (!avoidDuplicated) {
+				score += 200;
+				avoidDuplicated = true;
+			}
 		}
 	}
 	else if (bodyA == points200Off2->pb) {
 		if (bodyB == ball->pb) {
 			points200Off2->texture = App->tex->Load("images/200PointsOn.png");
+			if (!avoidDuplicated) {
+				score += 200;
+				avoidDuplicated = true;
+			}
 		}
 	}
 	else if (bodyA == points200Off3->pb) {
 		if (bodyB == ball->pb) {
 			points200Off3->texture = App->tex->Load("images/200PointsOn.png");
+			if (!avoidDuplicated) {
+				score += 200;
+				avoidDuplicated = true;
+			}
 		}
 	}
 	else if (bodyA == points200Off4->pb) {
 		if (bodyB == ball->pb) {
 			points200Off4->texture = App->tex->Load("images/200PointsOn.png");
+			if (!avoidDuplicated) {
+				score += 200;
+				avoidDuplicated = true;
+			}
 		}
 	}
 }	
@@ -560,6 +637,7 @@ void j1Map::Draw()
 	Blit(rightBlueActivator1->texture, rightBlueActivator1->pos.x, rightBlueActivator1->pos.y, &rightBlueActivator1->rect);
 	Blit(rightBlueActivator2->texture, rightBlueActivator2->pos.x, rightBlueActivator2->pos.y, &rightBlueActivator2->rect);
 	Blit(rightBlueActivator3->texture, rightBlueActivator3->pos.x, rightBlueActivator3->pos.y, &rightBlueActivator3->rect);
+	Blit(launcher->texture, launcher->pos.x, launcher->pos.y, &launcher->rect);
 	Blit(bgAbove->texture, bgAbove->pos.x, bgAbove->pos.y, &bgAbove->rect);
 	Blit(kickerLeft->texture, kickerLeft->pos.x, kickerLeft->pos.y, &kickerLeft->rect);
 	Blit(kickerRight->texture, kickerRight->pos.x, kickerRight->pos.y, &kickerRight->rect);

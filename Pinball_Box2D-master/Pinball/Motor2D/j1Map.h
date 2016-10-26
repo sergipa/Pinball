@@ -5,6 +5,8 @@
 #include "p2List.h"
 #include "p2Point.h"
 #include "j1Module.h"
+
+
 class j1Map : public j1Module
 {
 public:
@@ -80,6 +82,7 @@ public:
 	Sprite*		 bgAbove;
 	Sprite*		 bgBelow;
 	Sprite*      ball;
+	Sprite*		 launcher;
 	Sprite*		 bouncing_circle1;
 	Sprite*		 bouncing_circle2;
 	Sprite*		 bouncing_circle3;
@@ -171,9 +174,17 @@ public:
 	uint remainingBalls;
 	uint score;
 
-	bool avoidDoubleCheck;
-
 	p2List<Sprite*> resetImagesList;
+
+	uint bouncerSound;
+	uint kickerSound;
+	uint chargeBallSound;
+	uint launchBallSound;
+	uint letterSound;
+	uint bottomBouncerSound;
+
+	bool avoidDuplicated;
+	uint avoidDuplicatedTimer;
 
 };
 
