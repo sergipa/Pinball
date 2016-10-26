@@ -33,8 +33,32 @@ bool j1Map::PostUpdate() {
 		b2Vec2 ball_pos(ball->pb->body->GetWorldCenter());
 		ball->pb->body->ApplyForce(force, ball_pos,true);
 	}
+
+	uint now = SDL_GetTicks();
+
+	if (now - resetImagesTimer > 50) {
+		ResetImages(resetImage);
+		resetImagesTimer = SDL_GetTicks();
+	}
+
 	return true;
 }
+
+void j1Map::ResetImages(Sprite* bodyA) {
+	if (bodyA != NULL) {
+		bodyA->texture = bodyA->originalTexture;
+	}
+}
+
+void j1Map::ResetGame() {
+	p2List_item<Sprite*>* item;
+
+	for (item = resetImagesList.start; item != NULL; item = item->next)
+	{
+		item->data->texture = item->data->originalTexture;
+	}
+}
+
 bool j1Map::Start()
 {
 	bool ret = true;
@@ -51,8 +75,14 @@ bool j1Map::Start()
 
 	//Bouncers
 	bouncerLeft = new Sprite(App->tex->Load("images/bouncerIdle.png"), 0, 0, 39, 40, 104, 138);
+	bouncerLeft->originalTexture = bouncerLeft->texture;
+	resetImagesList.add(bouncerLeft);
 	bouncerRight = new Sprite(App->tex->Load("images/bouncerIdle.png"), 0, 0, 39, 40, 214, 129);
+	bouncerRight->originalTexture = bouncerLeft->texture;
+	resetImagesList.add(bouncerRight);
 	bouncerMid = new Sprite(App->tex->Load("images/bouncerIdle.png"), 0, 0, 39, 40, 159, 178);
+	bouncerMid->originalTexture = bouncerLeft->texture;
+	resetImagesList.add(bouncerMid);
 	bouncersbgOn = new Sprite(App->tex->Load("images/3MidCerclesOn.png"), 0, 0, 179, 118, 89, 114);
 	bouncersbgOff = new Sprite(App->tex->Load("images/3MidCerclesOff.png"), 0, 0, 179, 118, 89, 114);
 	bouncerBottomLeft = new Sprite(App->tex->Load("images/bouncerBottomLeft.png"), 0, 0, 56, 69, 66, 386);
@@ -94,26 +124,66 @@ bool j1Map::Start()
 	rightArrow = new Sprite(App->tex->Load("images/topRightArrowIdle.png"), 0, 0, 29, 36, 294, 165);
 	doubleArrow = new Sprite(App->tex->Load("images/doubleArrow.png"), 0, 0, 35, 60, 28, 114);
 	points200Off1 = new Sprite(App->tex->Load("images/200PointsOff.png"), 0, 0, 18, 18, 123, 41);
+	points200Off1->originalTexture = points200Off1->texture;
+	resetImagesList.add(points200Off1);
 	points200Off2 = new Sprite(App->tex->Load("images/200PointsOff.png"), 0, 0, 18, 18, 152, 41);
+	points200Off2->originalTexture = points200Off2->texture;
+	resetImagesList.add(points200Off2);
 	points200Off3 = new Sprite(App->tex->Load("images/200PointsOff.png"), 0, 0, 18, 18, 183, 41);
+	points200Off3->originalTexture = points200Off3->texture;
+	resetImagesList.add(points200Off3);
 	points200Off4 = new Sprite(App->tex->Load("images/200PointsOff.png"), 0, 0, 18, 18, 214, 41);
+	points200Off4->originalTexture = points200Off4->texture;
+	resetImagesList.add(points200Off4);
 
 	//Letters
 	superFreakYellow_S = new Sprite(App->tex->Load("images/superFreakYellow_S.png"), 0, 0, 18, 18, 53, 173);
+	superFreakYellow_S->originalTexture = superFreakYellow_S->texture;
+	resetImagesList.add(superFreakYellow_S);
 	superFreakYellow_U = new Sprite(App->tex->Load("images/superFreakYellow_U.png"), 0, 0, 18, 18, 62, 193);
+	superFreakYellow_U->originalTexture = superFreakYellow_U->texture;
+	resetImagesList.add(superFreakYellow_U);
 	superFreakYellow_P = new Sprite(App->tex->Load("images/superFreakYellow_P.png"), 0, 0, 18, 18, 72, 214);
+	superFreakYellow_P->originalTexture = superFreakYellow_P->texture;
+	resetImagesList.add(superFreakYellow_P);
 	superFreakYellow_E = new Sprite(App->tex->Load("images/superFreakYellow_E.png"), 0, 0, 18, 18, 81, 236);
+	superFreakYellow_E->originalTexture = superFreakYellow_E->texture;
+	resetImagesList.add(superFreakYellow_E);
 	superFreakYellow_R = new Sprite(App->tex->Load("images/superFreakYellow_R.png"), 0, 0, 18, 18, 90, 258);
+	superFreakYellow_R->originalTexture = superFreakYellow_R->texture;
+	resetImagesList.add(superFreakYellow_R);
 	superFreakYellow_F = new Sprite(App->tex->Load("images/superFreakYellow_F.png"), 0, 0, 18, 18, 289, 199);
+	superFreakYellow_F->originalTexture = superFreakYellow_F->texture;
+	resetImagesList.add(superFreakYellow_F);
 	superFreakYellow_R2 = new Sprite(App->tex->Load("images/superFreakYellow_R.png"), 0, 0, 18, 18, 280, 222);
+	superFreakYellow_R2->originalTexture = superFreakYellow_R2->texture;
+	resetImagesList.add(superFreakYellow_R2);
 	superFreakYellow_E2 = new Sprite(App->tex->Load("images/superFreakYellow_E.png"), 0, 0, 18, 18, 270, 246);
+	superFreakYellow_E2->originalTexture = superFreakYellow_E2->texture;
+	resetImagesList.add(superFreakYellow_E2);
 	superFreakYellow_A = new Sprite(App->tex->Load("images/superFreakYellow_A.png"), 0, 0, 18, 18, 261, 267);
+	superFreakYellow_A->originalTexture = superFreakYellow_A->texture;
+	resetImagesList.add(superFreakYellow_A);
 	superFreakYellow_K = new Sprite(App->tex->Load("images/superFreakYellow_K.png"), 0, 0, 18, 18, 252, 288);
+	superFreakYellow_K->originalTexture = superFreakYellow_K->texture;
+	resetImagesList.add(superFreakYellow_K);
 	superFreakYellow_S2 = new Sprite(App->tex->Load("images/superFreakYellow_S.png"), 0, 0, 18, 18, 23, 330);
+	superFreakYellow_S2->originalTexture = superFreakYellow_S2->texture;
+	resetImagesList.add(superFreakYellow_S2);
 	superFreakYellow_U2 = new Sprite(App->tex->Load("images/superFreakYellow_U.png"), 0, 0, 18, 18, 68, 126);
+	superFreakYellow_U2->originalTexture = superFreakYellow_U2->texture;
+	resetImagesList.add(superFreakYellow_U2);
 	superFreakYellow_P2 = new Sprite(App->tex->Load("images/superFreakYellow_P.png"), 0, 0, 18, 18, 94, 114);
+	superFreakYellow_P2->originalTexture = superFreakYellow_P2->texture;
+	resetImagesList.add(superFreakYellow_P2);
 	superFreakYellow_E3 = new Sprite(App->tex->Load("images/superFreakYellow_E.png"), 0, 0, 18, 18, 289, 309);
+	superFreakYellow_E3->originalTexture = superFreakYellow_E3->texture;
+	resetImagesList.add(superFreakYellow_E3);
 	superFreakYellow_R3 = new Sprite(App->tex->Load("images/superFreakYellow_R.png"), 0, 0, 18, 18, 311, 328);
+	superFreakYellow_R3->originalTexture = superFreakYellow_R3->texture;
+	resetImagesList.add(superFreakYellow_R3);
+
+	resetImagesTimer = SDL_GetTicks();
 
 	return ret;
 }
@@ -319,11 +389,11 @@ void j1Map::CreateColliders()
 	
 	endBall = App->physics->CreateRectangleSensor(170, 535, 150, 2, 0x0001, 0x0002);
 	endBall->listener = App->map;
-	bouncerLeftCheck =  App->physics->CreateRectangleSensor(123, 156, 32, 32, 0x0001, 0x0002);
+	bouncerLeftCheck =  App->physics->CreateRectangleSensor(123, 158, 32, 43, 0x0001, 0x0002);
 	bouncerLeftCheck->listener = App->map;
-	bouncerRightCheck = App->physics->CreateRectangleSensor(233, 146, 32, 32, 0x0001, 0x0002);
+	bouncerRightCheck = App->physics->CreateRectangleSensor(233, 148, 32, 43, 0x0001, 0x0002);
 	bouncerRightCheck->listener = App->map;
-	bouncerMidCheck = App->physics->CreateRectangleSensor(178, 196, 32, 32, 0x0001, 0x0002);
+	bouncerMidCheck = App->physics->CreateRectangleSensor(178, 198, 32, 43, 0x0001, 0x0002);
 	bouncerMidCheck->listener = App->map;
 	superFreakActivator1->pb = App->physics->CreateRectangleSensor(23, 329, 10, 7, 0x0001, 0x0002);
 	superFreakActivator1->pb->listener = App->map;
@@ -349,7 +419,7 @@ void j1Map::OnCollision(PhysBody * bodyA, PhysBody * bodyB)
 {
 	if (bodyA == endBall) {
 		if (bodyB == ball->pb) {
-
+			ResetGame();
 		}
 	}
 	else if (bodyA == bouncerLeftCheck) {
@@ -357,6 +427,7 @@ void j1Map::OnCollision(PhysBody * bodyA, PhysBody * bodyB)
 			if (bouncerLeftCheck) {
 				bouncerLeft->texture = App->tex->Load("images/bouncerHit.png");
 				bouncerLeftCheck->body->GetFixtureList()->SetRestitution(1.05);
+				resetImage = bouncerLeft;
 			}
 		}
 	}
@@ -365,6 +436,7 @@ void j1Map::OnCollision(PhysBody * bodyA, PhysBody * bodyB)
 			if (bouncerRightCheck) {
 				bouncerRight->texture = App->tex->Load("images/bouncerHit.png");
 				bouncerRightCheck->body->GetFixtureList()->SetRestitution(1.05);
+				resetImage = bouncerRight;
 			}
 		}
 	}
@@ -373,6 +445,7 @@ void j1Map::OnCollision(PhysBody * bodyA, PhysBody * bodyB)
 			if (bouncerMidCheck) {
 				bouncerMid->texture = App->tex->Load("images/bouncerHit.png");
 				bouncerMidCheck->body->GetFixtureList()->SetRestitution(1.05);
+				resetImage = bouncerMid;
 			}
 		}
 	}

@@ -45,6 +45,7 @@ public:
 		SDL_Rect rect;
 		iPoint pos;
 		PhysBody* pb = nullptr;
+		SDL_Texture* originalTexture;
 
 	private:
 	};
@@ -69,7 +70,11 @@ public:
 
 	void Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section);
 
-	void OnCollision(PhysBody * bodyA, PhysBody * bodyB);
+	void OnCollision(PhysBody* bodyA, PhysBody* bodyB);
+
+	void ResetImages(Sprite* bodyA);
+
+	void ResetGame();
 
 public:
 	Sprite*		 bgAbove;
@@ -145,6 +150,8 @@ public:
 	Sprite*		 points200Off3;
 	Sprite*		 points200Off4;
 
+	Sprite*		 resetImage = nullptr;
+
 	b2RevoluteJoint*		 left_kicker_coll;
 	b2RevoluteJoint*		 right_low_kicker_coll;
 	b2RevoluteJoint*		 right_top_kicker_coll;
@@ -160,7 +167,9 @@ public:
 	PhysBody* superFreakActivator4Check;
 	PhysBody* superFreakActivator5Check;
 
+	uint resetImagesTimer;
 
+	p2List<Sprite*> resetImagesList;
 };
 
 #endif // __j1MAP_H__
