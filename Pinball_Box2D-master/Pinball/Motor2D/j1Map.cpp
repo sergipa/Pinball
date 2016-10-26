@@ -62,7 +62,7 @@ void j1Map::ResetGame() {
 	if (remainingBalls > 0) {
 		App->map->ball->pb->body->SetAngularVelocity(0);
 
-		App->map->ball->pb->body->SetTransform(b2Vec2(PIXEL_TO_METERS(365), PIXEL_TO_METERS(460)), 0);
+		App->map->ball->pb->body->SetTransform(b2Vec2(PIXEL_TO_METERS(365), PIXEL_TO_METERS(450)), 0);
 
 	}
 	App->audio->PlayFx(chargeBallSound);
@@ -205,15 +205,15 @@ bool j1Map::Start()
 	avoidDuplicated = false;
 
 	//Music
-	App->audio->PlayMusic("audio/gameMusic.mp3");
+	App->audio->PlayMusic("audio/gameMusic.ogg");
 
 	//sounds
-	bouncerSound = App->audio->LoadFx("audio/sndBouncer.mp3");
-	kickerSound = App->audio->LoadFx("audio/sndKicker.mp3");
-	chargeBallSound = App->audio->LoadFx("audio/sndLaunch.mp3");
-	launchBallSound = App->audio->LoadFx("audio/sndLaunch.mp3");
-	letterSound = App->audio->LoadFx("audio/sndLetter.mp3");
-	bottomBouncerSound = App->audio->LoadFx("audio/sndBouncer2.mp3");
+	bouncerSound = App->audio->LoadFx("audio/sndBouncer.ogg");
+	kickerSound = App->audio->LoadFx("audio/sndKicker.ogg");
+	chargeBallSound = App->audio->LoadFx("audio/sndLaunch.ogg");
+	launchBallSound = App->audio->LoadFx("audio/sndLaunch.ogg");
+	letterSound = App->audio->LoadFx("audio/sndLetter.ogg");
+	bottomBouncerSound = App->audio->LoadFx("audio/sndBouncer2.ogg");
 
 	return ret;
 }
