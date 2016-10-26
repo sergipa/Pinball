@@ -450,8 +450,8 @@ void j1Map::CreateColliders()
 	bouncerRight->pb = App->physics->CreateCircle(234,149, 20,1, b2_staticBody, 0x0001, 0x0002);
 
 	//Spring
-	PhysBody* bodA = App->physics->CreateRectangle(366, 460, 15, 10, 0x0001, 0x0002);
-	PhysBody* bodB = App->physics->CreateRectangle(366, 513, 15, 10, 0x0001, 0x0002);
+	bodA = App->physics->CreateRectangle(366, 460, 15, 10, 0x0001, 0x0002);
+	bodB = App->physics->CreateRectangle(366, 513, 15, 10, 0x0001, 0x0002);
 	bodA->body->SetType(b2_dynamicBody);			 		 	   
 
 	bodB->body->SetType(b2_staticBody);
@@ -672,7 +672,7 @@ void j1Map::Draw()
 	Blit(rightBlueActivator1->texture, rightBlueActivator1->pos.x, rightBlueActivator1->pos.y, &rightBlueActivator1->rect);
 	Blit(rightBlueActivator2->texture, rightBlueActivator2->pos.x, rightBlueActivator2->pos.y, &rightBlueActivator2->rect);
 	Blit(rightBlueActivator3->texture, rightBlueActivator3->pos.x, rightBlueActivator3->pos.y, &rightBlueActivator3->rect);
-	Blit(launcher->texture, launcher->pos.x, launcher->pos.y, &launcher->rect);
+	//Blit(launcher->texture, , launcher->pos.y, &launcher->rect);
 	Blit(bgAbove->texture, bgAbove->pos.x, bgAbove->pos.y, &bgAbove->rect);
 	Blit(kickerLeft->texture, kickerLeft->pos.x, kickerLeft->pos.y, &kickerLeft->rect);
 	Blit(kickerRight->texture, kickerRight->pos.x, kickerRight->pos.y, &kickerRight->rect);

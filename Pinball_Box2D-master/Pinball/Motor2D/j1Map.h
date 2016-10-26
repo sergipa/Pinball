@@ -171,6 +171,9 @@ public:
 	PhysBody* superFreakActivator4Check;
 	PhysBody* superFreakActivator5Check;
 
+	PhysBody* bodA;
+	PhysBody* bodB;
+
 	uint resetImagesTimer;
 	uint remainingBalls;
 	uint score;
