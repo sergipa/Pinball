@@ -179,7 +179,7 @@ bool j1Physics::CleanUp()
 	return true;
 }
 
-PhysBody * j1Physics::CreateCircle(int x, int y, int radius,b2BodyType type, uint16 mask, uint16 category)
+PhysBody * j1Physics::CreateCircle(int x, int y, int radius,int restitution,b2BodyType type, uint16 mask, uint16 category)
 {
 	b2BodyDef body;
 	body.type = type;
@@ -194,6 +194,7 @@ PhysBody * j1Physics::CreateCircle(int x, int y, int radius,b2BodyType type, uin
 	fixture.density = 1.0f;
 	fixture.filter.maskBits = mask;
 	fixture.filter.categoryBits = category;
+	fixture.restitution = restitution;
 
 	b->CreateFixture(&fixture);
 
@@ -205,7 +206,7 @@ PhysBody * j1Physics::CreateCircle(int x, int y, int radius,b2BodyType type, uin
 	return pbody;
 }
 
-PhysBody* j1Physics::CreateRectangle(int x, int y, int width, int height)
+PhysBody* j1Physics::CreateRectangle(int x, int y, int width, int height,uint mask,uint category)
 {
 	b2BodyDef body;
 	body.type = b2_dynamicBody;
@@ -218,7 +219,8 @@ PhysBody* j1Physics::CreateRectangle(int x, int y, int width, int height)
 	b2FixtureDef fixture;
 	fixture.shape = &box;
 	fixture.density = 1.0f;
-
+	fixture.filter.maskBits = mask;
+	fixture.filter.categoryBits = category;
 	b->CreateFixture(&fixture);
 
 	PhysBody* pbody = new PhysBody();
@@ -292,7 +294,7 @@ PhysBody * j1Physics::CreateChainSensor(int x, int y,int* points,int size,uint m
 	return pbody;
 }
 
-PhysBody * j1Physics::CreateChain(int x, int y, int * points, int size, uint16 mask, uint16 category)
+PhysBody * j1Physics::CreateChain(int x, int y,int restitution, int * points, int size, uint16 mask, uint16 category)
 {
 	b2BodyDef body;
 	body.type = b2_dynamicBody;
@@ -315,7 +317,7 @@ PhysBody * j1Physics::CreateChain(int x, int y, int * points, int size, uint16 m
 	fixture.shape = &shape;
 	fixture.filter.maskBits = mask;
 	fixture.filter.categoryBits = category;
-
+	fixture.restitution = restitution;
 	b->CreateFixture(&fixture);
 
 	delete p;
@@ -328,24 +330,28 @@ PhysBody * j1Physics::CreateChain(int x, int y, int * points, int size, uint16 m
 	return pbody;
 }
 
-PhysBody * j1Physics::CreatePrismaticJoint(PhysBody * Rectangle, int lower, int max, int maxMotor, int motorSpeed)
+b2PrismaticJoint * j1Physics::CreatePrismaticJoint(PhysBody* bodyA,PhysBody* bodyB, b2Vec2 anchorA, b2Vec2 anchorB, int lower, int upper, int maxMotor, int motorSpeed)
 {
-	/*
+	
 	b2PrismaticJointDef prismaticJointDef;
-	prismaticJointDef.bodyA = bodyA;
-	prismaticJointDef.bodyB = bodyB;
+	prismaticJointDef.bodyA = bodyA->body;
+	prismaticJointDef.bodyB = bodyB->body;
 	prismaticJointDef.collideConnected = false;
-		/*
-		the_prism_joint.lowerTranslation=-6;
-		the_prism_joint.upperTranslation=6
-		the_prism_joint.enableLimit=true;
-		the_prism_joint.maxMotorForce=100;
-		the_prism_joint.motorSpeed=4.0;
-		*/
+	prismaticJointDef.localAxisA.Set(0, 1);
+	prismaticJointDef.localAnchorA.Set(PIXEL_TO_METERS(anchorA.x), PIXEL_TO_METERS(anchorA.y));
+	prismaticJointDef.localAnchorB.Set(PIXEL_TO_METERS(anchorB.x), PIXEL_TO_METERS(anchorB.y));
+	prismaticJointDef.lowerTranslation= PIXEL_TO_METERS(lower);
+	prismaticJointDef.upperTranslation = PIXEL_TO_METERS(upper);
+	prismaticJointDef.enableLimit=true;
+	prismaticJointDef.enableMotor = true;
+	prismaticJointDef.maxMotorForce=maxMotor;
+	prismaticJointDef.motorSpeed=motorSpeed*DEGTORAD;
+		
 	
-	
+	prismaticJointDef.type = e_prismaticJoint;
+	b2PrismaticJoint* prismaticJoint = (b2PrismaticJoint*)world->CreateJoint(&prismaticJointDef);
 
-	return nullptr;
+	return prismaticJoint;
 }
 
 b2RevoluteJoint* j1Physics::CreateRevoluteJoint(int radius, int width, int height, int posx, int posy, int despacement, int upper_angle, int lower_angle, int max_torque, int speed, uint16 mask, uint16 category)
