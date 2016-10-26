@@ -38,7 +38,6 @@ bool j1Map::PostUpdate() {
 bool j1Map::Start()
 {
 	bool ret = true;
-
 	// Background
 	bgBelow = new Sprite(App->tex->Load("images/BackgroundBelow.png"), 0, 0, 395, 537, 0, 0);
 	bgAbove = new Sprite(App->tex->Load("images/Background.png"), 0, 0, 395, 537, 0, 0);
@@ -215,8 +214,8 @@ void j1Map::CreateColliders()
 
 	int background4[30] = {
 		50, 122,
-		111, 97,
-		111, 50,
+		119, 97,
+		119, 45,
 		107, 45,
 		65, 46,
 		55, 49,
@@ -310,9 +309,11 @@ void j1Map::CreateColliders()
 	//360,52 Default position
 	ball->pb = App->physics->CreateCircle(365, 352, 7,b2_dynamicBody, 0x0002, 0x0001);
 
-	left_kicker_coll = App->physics->CreateRevoluteJointPoly(7, kickerLeft, 18, 119, 490, 10, 10, 60, -5, 20, 0, 0x0001, 0x0002);
-	right_low_kicker_coll = App->physics->CreateRevoluteJointPoly(7, kickerRight, 22, 234, 490, 38, 8, 0, -250, 20, 0, 0x0004, 0x0008);
+	left_kicker_coll = App->physics->CreateRevoluteJointPoly(7, kickerLeft, 18, 119, 490, 10, 10, 60, -2, 20, 0, 0x0001, 0x0002);
 
+	right_low_kicker_coll = App->physics->CreateRevoluteJointPoly(7, kickerRight, 22, 234, 490, 38, 8, 2, -60, 20, 0, 0x0001, 0x0002);
+
+	right_top_kicker_coll = App->physics->CreateRevoluteJointPoly(7, kickerRight, 22, 332, 274, 38, 8, 2, -60, 20, 0, 0x0001, 0x0002);
 }
 
 void j1Map::Draw()

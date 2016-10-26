@@ -144,7 +144,7 @@ public:
 
 	b2RevoluteJoint*		 left_kicker_coll;
 	b2RevoluteJoint*		 right_low_kicker_coll;
-
+	b2RevoluteJoint*		 right_top_kicker_coll;
 };
 
 #endif // __j1MAP_H__

@@ -76,19 +76,32 @@ bool j1Scene::Update(float dt)
 	else if ((App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)) {
 		App->map->left_kicker_coll->SetMotorSpeed(400);
 	}
-	else if ((App->input->GetKey(SDL_SCANCODE_A) == KEY_UP)) {
-	}
+
 	else {
 		App->map->left_kicker_coll->SetMotorSpeed(-200);
 	}
-/*	// Right kicker
-	if ((App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN))
-		App->map->right_kicker->SetMotorSpeed(-300);
-	else if ((App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT))
-		App->map->right_kicker->SetMotorSpeed(-300);
-	else
-		App->map->right_kicker->SetMotorSpeed(200);
-	*/
+	// Right kicker low
+	if ((App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN)) {
+		App->map->right_low_kicker_coll->SetMotorSpeed(-400);
+	}
+	else if ((App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)) {
+		App->map->right_low_kicker_coll->SetMotorSpeed(-400);
+	}
+	else {
+		App->map->right_low_kicker_coll->SetMotorSpeed(200);
+	}
+
+	// Right kicker top
+	if ((App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN)) {
+		App->map->right_top_kicker_coll->SetMotorSpeed(-400);
+	}
+	else if ((App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)) {
+		App->map->right_top_kicker_coll->SetMotorSpeed(-400);
+	}
+	else {
+		App->map->right_top_kicker_coll->SetMotorSpeed(200);
+	}
+	
 
 	App->map->Draw();
 
